@@ -20,9 +20,9 @@ const HeroSection = () => {
 
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
             className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-secondary-foreground leading-[1.1] mb-6"
           >
             Turn Heads.
@@ -31,39 +31,46 @@ const HeroSection = () => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             className="text-lg text-muted-foreground max-w-lg mb-8"
           >
             Expert car wrapping, PPF installation, ceramic coating, and auto detailing.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-display font-semibold uppercase tracking-wider text-base px-8 shadow-glow"
+          <div className="flex flex-col sm:flex-row gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7, ease: 'easeOut' }}
             >
-              <a href="#simulator">
-                Preview Your Car
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-primary/50 text-primary hover:bg-primary/10 font-display font-semibold uppercase tracking-wider text-base px-8"
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-display font-semibold uppercase tracking-wider text-base px-8 shadow-glow"
+              >
+                <a href="#simulator">
+                  Preview Your Car
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </a>
+              </Button>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9, ease: 'easeOut' }}
             >
-              <a href="#services">Explore Services</a>
-            </Button>
-          </motion.div>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-primary/50 text-primary hover:bg-primary/10 font-display font-semibold uppercase tracking-wider text-base px-8"
+              >
+                <a href="#services">Explore Services</a>
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
