@@ -54,7 +54,7 @@ const WrapSimulator = () => {
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <span className="text-primary font-display font-semibold uppercase tracking-widest text-sm">
+          <span className="text-primary font-display font-semibold lowercase first-letter:uppercase tracking-widest text-sm">
             Interactive Tool
           </span>
           <h2 className="text-3xl lg:text-5xl font-display font-bold text-secondary-foreground mt-2">
@@ -70,7 +70,7 @@ const WrapSimulator = () => {
           <div className="space-y-6">
             {/* Vehicle selector */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Car className="w-4 h-4 text-primary" />
                 Select Vehicle
               </h3>
@@ -94,7 +94,7 @@ const WrapSimulator = () => {
 
             {/* Color selector */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Paintbrush className="w-4 h-4 text-primary" />
                 Wrap Color
               </h3>
@@ -120,7 +120,7 @@ const WrapSimulator = () => {
 
             {/* Finish selector */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3">
                 Finish Type
               </h3>
               <div className="flex gap-2">
@@ -145,7 +145,7 @@ const WrapSimulator = () => {
               href="https://wa.me/254700000000?text=Hi!%20I'm%20interested%20in%20wrapping%20my%20car%20in%20"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold lowercase first-letter:uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
             >
               Start Your Wrap
             </a>

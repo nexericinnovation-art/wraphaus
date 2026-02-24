@@ -177,7 +177,7 @@ const Simulator3D = () => {
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <span className="text-primary font-display font-semibold uppercase tracking-widest text-sm">
+          <span className="text-primary font-display font-semibold lowercase first-letter:uppercase tracking-widest text-sm">
             Interactive 3D Tool
           </span>
           <h2 className="text-3xl lg:text-5xl font-display font-bold text-secondary-foreground mt-2">
@@ -193,7 +193,7 @@ const Simulator3D = () => {
           <div className="space-y-6 order-2 lg:order-1">
             {/* Color selector */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Paintbrush className="w-4 h-4 text-primary" />
                 Wrap Color
               </h3>
@@ -219,7 +219,7 @@ const Simulator3D = () => {
 
             {/* Finish selector */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3">
                 Finish Type
               </h3>
               <div className="grid grid-cols-2 gap-2">
@@ -244,7 +244,7 @@ const Simulator3D = () => {
               href={`https://wa.me/254700000000?text=Hi!%20I'd%20like%20a%20${encodeURIComponent(selectedColor.name)}%20${encodeURIComponent(selectedFinish.name)}%20wrap`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
+              className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold lowercase first-letter:uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
             >
               Start Your Wrap
             </a>

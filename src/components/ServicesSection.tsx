@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Layers, Shield, Droplets, Sun, Sparkles, RotateCcw } from "lucide-react";
+import { Car, Shield, Droplet, Sun, Sparkles, Scissors } from "lucide-react";
 
 const services = [
   {
-    icon: Layers,
+    icon: Car,
     title: "Car Body Wrapping",
     description: "Full and partial body wraps in premium vinyl with gloss, matte, satin, and metallic finishes.",
   },
@@ -13,7 +13,7 @@ const services = [
     description: "Paint Protection Film to guard against scratches, rock chips, and UV damage.",
   },
   {
-    icon: RotateCcw,
+    icon: Scissors,
     title: "Wrap Removal",
     description: "Safe, clean removal of old wraps without damaging the original paintwork.",
   },
@@ -28,7 +28,7 @@ const services = [
     description: "Deep cleaning, paint correction, and buffing to restore your car's showroom shine.",
   },
   {
-    icon: Droplets,
+    icon: Droplet,
     title: "Ceramic Coating",
     description: "Long-lasting nano-ceramic coating for superior protection and hydrophobic finish.",
   },
@@ -62,8 +62,8 @@ const ServicesSection = () => {
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className="group p-6 rounded-xl border border-border bg-card hover:border-primary/40 transition-all duration-300 hover:shadow-card"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                <service.icon className="w-6 h-6 text-primary" />
+              <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <service.icon className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-display font-bold text-lg text-card-foreground mb-2">
                 {service.title}

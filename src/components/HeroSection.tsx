@@ -17,42 +17,32 @@ const HeroSection = () => {
 
       <div className="relative container mx-auto px-4 pt-20 lg:pt-0">
         <div className="max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4" />
-              Premium Auto Customization
-            </span>
-          </motion.div>
+
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.6 }}
             className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-secondary-foreground leading-[1.1] mb-6"
           >
-            Transform Your
+            Turn Heads.
             <br />
-            <span className="text-gradient-primary">Ride's Identity</span>
+            <span className="text-gradient-primary">Own the Road.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
             className="text-lg text-muted-foreground max-w-lg mb-8"
           >
             Expert car wrapping, PPF installation, ceramic coating, and auto detailing.
-            Located at Ruiru Bypass — Trunked Coffee.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <Button

@@ -6,7 +6,7 @@ const ContactSection = () => {
     <section id="contact" className="py-20 lg:py-28 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-primary font-display font-semibold uppercase tracking-widest text-sm">
+          <span className="text-primary font-display font-semibold lowercase first-letter:uppercase tracking-widest text-sm">
             Get In Touch
           </span>
           <h2 className="text-3xl lg:text-5xl font-display font-bold text-foreground mt-2">
@@ -66,7 +66,7 @@ const ContactSection = () => {
               <Button
                 asChild
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 font-display font-semibold uppercase tracking-wider"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-display font-semibold lowercase first-letter:uppercase tracking-wider"
               >
                 <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
@@ -77,7 +77,7 @@ const ContactSection = () => {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-border text-foreground hover:bg-muted font-display font-semibold uppercase tracking-wider"
+                className="border-border text-foreground hover:bg-muted font-display font-semibold lowercase first-letter:uppercase tracking-wider"
               >
                 <a href="tel:+254700000000">
                   <Phone className="w-5 h-5 mr-2" />

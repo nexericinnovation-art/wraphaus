@@ -14,8 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Rajdhani", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        logo: ["Poppins", "Montserrat", "sans-serif"],
+        display: ["Montserrat", "sans-serif"],
+        cta: ["Oswald", "sans-serif"],
+        body: ["Roboto", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

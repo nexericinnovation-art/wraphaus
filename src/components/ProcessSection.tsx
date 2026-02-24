@@ -46,7 +46,7 @@ const ProcessSection = () => {
               transition={{ duration: 0.4, delay: i * 0.15 }}
               className="relative group"
             >
-              <span className="font-display text-7xl lg:text-8xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors leading-none">
+              <span className="font-display text-7xl lg:text-8xl font-bold text-primary/50 group-hover:text-primary/70 transition-colors leading-none">
                 {step.number}
               </span>
               <div className="mt-[-1rem] relative z-10">
