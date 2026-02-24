@@ -69,7 +69,7 @@ const HeroSection = () => {
               asChild
               size="lg"
               variant="outline"
-              className="border-muted-foreground/30 text-secondary-foreground hover:bg-muted/10 font-display font-semibold uppercase tracking-wider text-base px-8"
+              className="border-primary/50 text-primary hover:bg-primary/10 font-display font-semibold uppercase tracking-wider text-base px-8"
             >
               <a href="#services">Explore Services</a>
             </Button>
