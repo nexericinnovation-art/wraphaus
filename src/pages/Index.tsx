@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import WrapSimulator from "@/components/WrapSimulator";
+import GallerySection from "@/components/GallerySection";
+import Simulator3D from "@/components/Simulator3D";
 import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
 import ContactSection from "@/components/ContactSection";
@@ -11,7 +12,8 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
-      <WrapSimulator />
+      <GallerySection />
+      <Simulator3D />
       <ServicesSection />
       <ProcessSection />
       <ContactSection />
