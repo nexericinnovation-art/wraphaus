@@ -1,7 +1,16 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
+import carSedan from "@/assets/car-sedan.png";
+import carSuv from "@/assets/car-suv.png";
+import carCoupe from "@/assets/car-coupe.png";
+
+const featuredVehicles = [
+  { id: "sedan", name: "Sedan", sub: "BMW 3 Series", image: carSedan },
+  { id: "suv", name: "SUV", sub: "Jeep Grand Cherokee", image: carSuv },
+  { id: "coupe", name: "Coupe", sub: "Audi A5", image: carCoupe },
+];
 
 const HeroSection = () => {
   return (
@@ -71,6 +80,32 @@ const HeroSection = () => {
               </Button>
             </motion.div>
           </div>
+
+          {/* Featured vehicles strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: "easeOut" }}
+            className="mt-12 grid grid-cols-3 gap-4 max-w-xl"
+          >
+            {featuredVehicles.map((v, i) => (
+              <a
+                key={v.id}
+                href="#simulator"
+                className="group relative bg-secondary/60 backdrop-blur-sm border border-border/20 rounded-xl p-3 hover:border-primary/50 transition-all hover:bg-secondary/80"
+              >
+                <div className="aspect-[16/10] overflow-hidden rounded-lg mb-2">
+                  <img
+                    src={v.image}
+                    alt={v.sub}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <p className="font-display font-semibold text-secondary-foreground text-sm">{v.name}</p>
+                <p className="text-xs text-muted-foreground">{v.sub}</p>
+              </a>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
