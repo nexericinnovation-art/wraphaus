@@ -1,147 +1,8 @@
-import { useRef, useState, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useState, Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
-import { Paintbrush, RotateCcw } from "lucide-react";
-import * as THREE from "three";
-
-// Stylized low-poly car model built from primitives
-const CarModel = ({ color, roughness }: { color: string; roughness: number }) => {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.15;
-    }
-  });
-
-  const bodyMaterial = (
-    <meshPhysicalMaterial
-      color={color}
-      roughness={roughness}
-      metalness={0.6}
-      clearcoat={1}
-      clearcoatRoughness={roughness * 0.5}
-    />
-  );
-
-  const glassMaterial = (
-    <meshPhysicalMaterial
-      color="#1a2a3a"
-      roughness={0.05}
-      metalness={0.1}
-      transmission={0.6}
-      transparent
-      opacity={0.7}
-    />
-  );
-
-  const tireMaterial = (
-    <meshStandardMaterial color="#1a1a1a" roughness={0.9} />
-  );
-
-  const rimMaterial = (
-    <meshStandardMaterial color="#c0c0c0" metalness={0.9} roughness={0.2} />
-  );
-
-  return (
-    <group ref={groupRef} position={[0, -0.5, 0]} scale={0.85}>
-      {/* Main body - lower */}
-      <mesh position={[0, 0.4, 0]} castShadow>
-        <boxGeometry args={[4.2, 0.7, 1.8]} />
-        {bodyMaterial}
-      </mesh>
-
-      {/* Body - rounded front */}
-      <mesh position={[1.8, 0.35, 0]} castShadow>
-        <sphereGeometry args={[0.55, 16, 16]} />
-        {bodyMaterial}
-      </mesh>
-
-      {/* Body - rounded rear */}
-      <mesh position={[-1.8, 0.35, 0]} castShadow>
-        <sphereGeometry args={[0.55, 16, 16]} />
-        {bodyMaterial}
-      </mesh>
-
-      {/* Cabin / roof */}
-      <mesh position={[-0.2, 1.0, 0]} castShadow>
-        <boxGeometry args={[2.2, 0.65, 1.6]} />
-        {bodyMaterial}
-      </mesh>
-
-      {/* Windshield front */}
-      <mesh position={[0.85, 0.95, 0]} rotation={[0, 0, 0.35]} castShadow>
-        <boxGeometry args={[0.8, 0.6, 1.5]} />
-        {glassMaterial}
-      </mesh>
-
-      {/* Windshield rear */}
-      <mesh position={[-1.15, 0.95, 0]} rotation={[0, 0, -0.3]} castShadow>
-        <boxGeometry args={[0.6, 0.55, 1.5]} />
-        {glassMaterial}
-      </mesh>
-
-      {/* Side windows left */}
-      <mesh position={[-0.2, 0.98, 0.85]}>
-        <boxGeometry args={[1.8, 0.45, 0.05]} />
-        {glassMaterial}
-      </mesh>
-
-      {/* Side windows right */}
-      <mesh position={[-0.2, 0.98, -0.85]}>
-        <boxGeometry args={[1.8, 0.45, 0.05]} />
-        {glassMaterial}
-      </mesh>
-
-      {/* Headlights */}
-      <mesh position={[2.1, 0.45, 0.6]}>
-        <sphereGeometry args={[0.15, 12, 12]} />
-        <meshStandardMaterial color="#ffffdd" emissive="#ffffaa" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[2.1, 0.45, -0.6]}>
-        <sphereGeometry args={[0.15, 12, 12]} />
-        <meshStandardMaterial color="#ffffdd" emissive="#ffffaa" emissiveIntensity={0.5} />
-      </mesh>
-
-      {/* Taillights */}
-      <mesh position={[-2.1, 0.45, 0.6]}>
-        <sphereGeometry args={[0.12, 12, 12]} />
-        <meshStandardMaterial color="#ff2222" emissive="#ff0000" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[-2.1, 0.45, -0.6]}>
-        <sphereGeometry args={[0.12, 12, 12]} />
-        <meshStandardMaterial color="#ff2222" emissive="#ff0000" emissiveIntensity={0.5} />
-      </mesh>
-
-      {/* Wheels */}
-      {[
-        [1.3, 0, 0.95],
-        [1.3, 0, -0.95],
-        [-1.3, 0, 0.95],
-        [-1.3, 0, -0.95],
-      ].map((pos, i) => (
-        <group key={i} position={pos as [number, number, number]}>
-          {/* Tire */}
-          <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
-            <torusGeometry args={[0.32, 0.12, 12, 24]} />
-            {tireMaterial}
-          </mesh>
-          {/* Rim */}
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.22, 0.22, 0.15, 16]} />
-            {rimMaterial}
-          </mesh>
-        </group>
-      ))}
-
-      {/* Undercarriage */}
-      <mesh position={[0, 0.02, 0]}>
-        <boxGeometry args={[3.8, 0.05, 1.6]} />
-        <meshStandardMaterial color="#111111" />
-      </mesh>
-    </group>
-  );
-};
+import { Paintbrush, RotateCcw, Car } from "lucide-react";
+import { vehicleComponents, VehicleType } from "./simulator/VehicleModels";
 
 const wrapColors = [
   { name: "Gloss Black", hex: "#0a0a0a", roughness: 0.1 },
@@ -165,11 +26,22 @@ const finishes = [
   { name: "Metallic", roughness: 0.15 },
 ];
 
+const vehicleTypes: { key: VehicleType; label: string; desc: string }[] = [
+  { key: "sedan", label: "Sedan", desc: "BMW 3 Series" },
+  { key: "suv", label: "SUV", desc: "Jeep Grand Cherokee" },
+  { key: "minisuv", label: "Mini SUV", desc: "Honda HR-V" },
+  { key: "pickup", label: "Pickup", desc: "Toyota Hilux" },
+  { key: "coupe", label: "Coupe", desc: "Audi A5" },
+  { key: "hatchback", label: "Hatchback", desc: "VW Golf" },
+];
+
 const Simulator3D = () => {
   const [selectedColor, setSelectedColor] = useState(wrapColors[2]);
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
+  const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>("sedan");
 
   const effectiveRoughness = selectedFinish.roughness;
+  const VehicleComponent = vehicleComponents[selectedVehicle];
 
   return (
     <section id="simulator" className="py-20 lg:py-28 bg-dark-surface relative overflow-hidden">
@@ -184,20 +56,44 @@ const Simulator3D = () => {
             3D Wrap <span className="text-gradient-primary">Simulator</span>
           </h2>
           <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
-            Drag to rotate the car. Pick a color and finish to preview your wrap in real time.
+            Choose your vehicle, pick a color and finish, then drag to rotate and preview your wrap in real time.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-[1fr_2fr] gap-8 items-start">
           {/* Controls */}
           <div className="space-y-6 order-2 lg:order-1">
+            {/* Vehicle selector */}
+            <div>
+              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                <Car className="w-4 h-4 text-primary" />
+                Vehicle Type
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                {vehicleTypes.map((v) => (
+                  <button
+                    key={v.key}
+                    onClick={() => setSelectedVehicle(v.key)}
+                    className={`px-3 py-2.5 rounded-lg text-left transition-all border ${
+                      selectedVehicle === v.key
+                        ? "border-primary bg-primary/10 text-secondary-foreground"
+                        : "border-border/20 text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    <span className="text-sm font-medium block">{v.label}</span>
+                    <span className="text-xs text-muted-foreground">{v.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Color selector */}
             <div>
               <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Paintbrush className="w-4 h-4 text-primary" />
                 Wrap Color
               </h3>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-6 gap-2">
                 {wrapColors.map((color) => (
                   <button
                     key={color.name}
@@ -205,7 +101,7 @@ const Simulator3D = () => {
                     title={color.name}
                     className={`w-full aspect-square rounded-lg border-2 transition-all ${
                       selectedColor.name === color.name
-                        ? "border-primary scale-105 shadow-glow"
+                        ? "border-primary scale-110 shadow-glow"
                         : "border-border/20 hover:scale-105"
                     }`}
                     style={{ backgroundColor: color.hex }}
@@ -241,7 +137,7 @@ const Simulator3D = () => {
 
             {/* CTA */}
             <a
-              href={`https://wa.me/254700000000?text=Hi!%20I'd%20like%20a%20${encodeURIComponent(selectedColor.name)}%20${encodeURIComponent(selectedFinish.name)}%20wrap`}
+              href={`https://wa.me/254700000000?text=Hi!%20I'd%20like%20a%20${encodeURIComponent(selectedColor.name)}%20${encodeURIComponent(selectedFinish.name)}%20wrap%20for%20my%20${encodeURIComponent(vehicleTypes.find(v => v.key === selectedVehicle)?.desc || selectedVehicle)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold lowercase first-letter:uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
@@ -268,7 +164,7 @@ const Simulator3D = () => {
                 <directionalLight position={[-3, 4, -3]} intensity={0.4} />
                 <pointLight position={[0, 3, 0]} intensity={0.3} color="#0080ff" />
 
-                <CarModel
+                <VehicleComponent
                   color={selectedColor.hex}
                   roughness={effectiveRoughness}
                 />
@@ -293,6 +189,13 @@ const Simulator3D = () => {
                 />
               </Suspense>
             </Canvas>
+
+            {/* Vehicle label */}
+            <div className="absolute top-3 left-3 z-10 bg-secondary/70 backdrop-blur-sm rounded-lg px-3 py-1.5">
+              <span className="text-xs font-semibold text-secondary-foreground">
+                {vehicleTypes.find(v => v.key === selectedVehicle)?.desc}
+              </span>
+            </div>
 
             {/* Instruction overlay */}
             <div className="absolute bottom-3 left-3 z-10 bg-secondary/70 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
