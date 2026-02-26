@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        logo: ["Poppins", "Montserrat", "sans-serif"],
-        display: ["Montserrat", "sans-serif"],
-        cta: ["Oswald", "sans-serif"],
-        body: ["Roboto", "sans-serif"],
+        logo: ["Rajdhani", "sans-serif"],
+        display: ["Rajdhani", "sans-serif"],
+        cta: ["Barlow Condensed", "sans-serif"],
+        body: ["Barlow", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
