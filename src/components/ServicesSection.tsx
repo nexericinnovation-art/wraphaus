@@ -1,34 +1,39 @@
 import { motion } from "framer-motion";
-import { Car, Shield, Droplet, Sun, Sparkles, Scissors } from "lucide-react";
+import serviceWrapping from "@/assets/service-wrapping.jpg";
+import servicePpf from "@/assets/service-ppf.jpg";
+import serviceRemoval from "@/assets/service-removal.jpg";
+import serviceTinting from "@/assets/service-tinting.jpg";
+import serviceDetailing from "@/assets/service-detailing.jpg";
+import serviceCeramic from "@/assets/service-ceramic.jpg";
 
 const services = [
   {
-    icon: Car,
+    image: serviceWrapping,
     title: "Car Body Wrapping",
     description: "Full and partial body wraps in premium vinyl with gloss, matte, satin, and metallic finishes.",
   },
   {
-    icon: Shield,
+    image: servicePpf,
     title: "Vinyl & PPF Installation",
     description: "Paint Protection Film to guard against scratches, rock chips, and UV damage.",
   },
   {
-    icon: Scissors,
+    image: serviceRemoval,
     title: "Wrap Removal",
     description: "Safe, clean removal of old wraps without damaging the original paintwork.",
   },
   {
-    icon: Sun,
+    image: serviceTinting,
     title: "Headlight Tint & Car Tinting",
     description: "Professional window tinting and headlight tinting for style and UV protection.",
   },
   {
-    icon: Sparkles,
+    image: serviceDetailing,
     title: "Auto Detailing & Buffing",
     description: "Deep cleaning, paint correction, and buffing to restore your car's showroom shine.",
   },
   {
-    icon: Droplet,
+    image: serviceCeramic,
     title: "Ceramic Coating",
     description: "Long-lasting nano-ceramic coating for superior protection and hydrophobic finish.",
   },
@@ -61,20 +66,25 @@ const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="group p-8 rounded-2xl border border-border bg-gradient-to-br from-background via-white/80 to-background shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
+              className="group rounded-2xl border border-border bg-card shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
             >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div className="w-full h-full bg-gradient-to-br from-primary/10 via-pink-200/10 to-transparent blur-2xl" />
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
               </div>
-              <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors shadow-md">
-                <service.icon className="w-8 h-8 text-primary drop-shadow-md" />
+              <div className="p-6 pt-2">
+                <h3 className="font-display font-bold text-xl text-card-foreground mb-2 drop-shadow-sm">
+                  {service.title}
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
               </div>
-              <h3 className="font-display font-bold text-xl text-card-foreground mb-2 drop-shadow-sm">
-                {service.title}
-              </h3>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                {service.description}
-              </p>
             </motion.div>
           ))}
         </div>
