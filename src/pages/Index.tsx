@@ -2,21 +2,23 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import GallerySection from "@/components/GallerySection";
 import Simulator3D from "@/components/Simulator3D";
-import ServicesSection from "@/components/ServicesSection";
+import ServicesPreview from "@/components/ServicesPreview";
 import ProcessSection from "@/components/ProcessSection";
-import ContactSection from "@/components/ContactSection";
+import ProudlyKenyanSection from "@/components/ProudlyKenyanSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark">
       <Navbar />
       <HeroSection />
+      <ServicesPreview />
       <GallerySection />
       <Simulator3D />
-      <ServicesSection />
       <ProcessSection />
-      <ContactSection />
+      <ProudlyKenyanSection />
+      <TestimonialsSection />
       <Footer />
     </div>
   );
