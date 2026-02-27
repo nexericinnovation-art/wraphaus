@@ -25,14 +25,14 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="process" className="py-20 lg:py-28 bg-dark-surface relative overflow-hidden">
+    <section id="process" className="py-20 lg:py-28 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
           <span className="text-primary font-display font-semibold uppercase tracking-widest text-sm">
             How It Works
           </span>
-          <h2 className="text-3xl lg:text-5xl font-display font-bold text-secondary-foreground mt-2">
-            Our <span className="text-gradient-primary">Process</span>
+          <h2 className="text-3xl lg:text-5xl font-display font-bold text-foreground mt-2">
+            Our <span className="text-gradient-gold">Process</span>
           </h2>
         </div>
 
@@ -44,13 +44,13 @@ const ProcessSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.15 }}
-              className="relative group"
+              className="relative group p-6 rounded-xl border border-border hover:border-primary/30 transition-colors"
             >
-              <span className="font-display text-7xl lg:text-8xl font-bold text-primary/50 group-hover:text-primary/70 transition-colors leading-none">
+              <span className="font-display text-6xl lg:text-7xl font-bold text-primary/20 group-hover:text-primary/40 transition-colors leading-none">
                 {step.number}
               </span>
-              <div className="mt-[-1rem] relative z-10">
-                <h3 className="font-display font-bold text-xl text-secondary-foreground mb-2">
+              <div className="mt-[-0.5rem] relative z-10">
+                <h3 className="font-display font-bold text-xl text-foreground mb-2">
                   {step.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">

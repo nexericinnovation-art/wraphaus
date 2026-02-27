@@ -36,7 +36,7 @@ const vehicleTypes: { key: VehicleType; label: string; desc: string }[] = [
 ];
 
 const Simulator3D = () => {
-  const [selectedColor, setSelectedColor] = useState(wrapColors[2]);
+  const [selectedColor, setSelectedColor] = useState(wrapColors[6]); // Default to gold
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>("sedan");
 
@@ -45,19 +45,21 @@ const Simulator3D = () => {
 
   return (
     <section id="simulator" className="py-20 lg:py-28 bg-dark-surface relative overflow-hidden">
+      <div className="absolute inset-0 african-pattern opacity-20" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         <div className="text-center mb-12">
-          <span className="text-primary font-display font-semibold lowercase first-letter:uppercase tracking-widest text-sm">
+          <span className="text-primary font-display font-semibold uppercase tracking-widest text-sm">
             Interactive 3D Tool
           </span>
-          <h2 className="text-3xl lg:text-5xl font-display font-bold text-secondary-foreground mt-2">
-            3D Wrap <span className="text-gradient-primary">Simulator</span>
+          <h2 className="text-3xl lg:text-5xl font-display font-bold mt-2">
+            3D Wrap <span className="text-gradient-gold">Simulator</span>
           </h2>
           <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
             Choose your vehicle, pick a color and finish, then drag to rotate and preview your wrap in real time.
           </p>
+          <div className="african-border mx-auto max-w-xs mt-6" />
         </div>
 
         <div className="grid lg:grid-cols-[1fr_2fr] gap-8 items-start">
@@ -65,7 +67,7 @@ const Simulator3D = () => {
           <div className="space-y-6 order-2 lg:order-1">
             {/* Vehicle selector */}
             <div>
-              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Car className="w-4 h-4 text-primary" />
                 Vehicle Type
               </h3>
@@ -76,7 +78,7 @@ const Simulator3D = () => {
                     onClick={() => setSelectedVehicle(v.key)}
                     className={`px-3 py-2.5 rounded-lg text-left transition-all border ${
                       selectedVehicle === v.key
-                        ? "border-primary bg-primary/10 text-secondary-foreground"
+                        ? "border-primary bg-primary/10 text-foreground"
                         : "border-border/20 text-muted-foreground hover:border-primary/40"
                     }`}
                   >
@@ -89,7 +91,7 @@ const Simulator3D = () => {
 
             {/* Color selector */}
             <div>
-              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
                 <Paintbrush className="w-4 h-4 text-primary" />
                 Wrap Color
               </h3>
@@ -109,13 +111,13 @@ const Simulator3D = () => {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-2">
-                Selected: <span className="text-secondary-foreground font-medium">{selectedColor.name}</span>
+                Selected: <span className="text-foreground font-medium">{selectedColor.name}</span>
               </p>
             </div>
 
             {/* Finish selector */}
             <div>
-              <h3 className="text-sm font-semibold lowercase first-letter:uppercase tracking-wider text-muted-foreground mb-3">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                 Finish Type
               </h3>
               <div className="grid grid-cols-2 gap-2">
@@ -140,7 +142,7 @@ const Simulator3D = () => {
               href={`https://wa.me/254700000000?text=Hi!%20I'd%20like%20a%20${encodeURIComponent(selectedColor.name)}%20${encodeURIComponent(selectedFinish.name)}%20wrap%20for%20my%20${encodeURIComponent(vehicleTypes.find(v => v.key === selectedVehicle)?.desc || selectedVehicle)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold lowercase first-letter:uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
+              className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-display font-semibold uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-glow"
             >
               Start Your Wrap
             </a>
@@ -162,7 +164,7 @@ const Simulator3D = () => {
                   shadow-mapSize={[1024, 1024]}
                 />
                 <directionalLight position={[-3, 4, -3]} intensity={0.4} />
-                <pointLight position={[0, 3, 0]} intensity={0.3} color="#0080ff" />
+                <pointLight position={[0, 3, 0]} intensity={0.3} color="#c8a22c" />
 
                 <VehicleComponent
                   color={selectedColor.hex}
@@ -191,16 +193,16 @@ const Simulator3D = () => {
             </Canvas>
 
             {/* Vehicle label */}
-            <div className="absolute top-3 left-3 z-10 bg-secondary/70 backdrop-blur-sm rounded-lg px-3 py-1.5">
-              <span className="text-xs font-semibold text-secondary-foreground">
+            <div className="absolute top-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5">
+              <span className="text-xs font-semibold text-white">
                 {vehicleTypes.find(v => v.key === selectedVehicle)?.desc}
               </span>
             </div>
 
             {/* Instruction overlay */}
-            <div className="absolute bottom-3 left-3 z-10 bg-secondary/70 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
+            <div className="absolute bottom-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
               <RotateCcw className="w-4 h-4 text-primary" />
-              <span className="text-xs text-muted-foreground">Drag to rotate • Scroll to zoom</span>
+              <span className="text-xs text-white/70">Drag to rotate • Scroll to zoom</span>
             </div>
           </div>
         </div>
