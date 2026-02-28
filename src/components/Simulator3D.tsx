@@ -29,7 +29,6 @@ const finishes = [
 const vehicleTypes: { key: VehicleType; label: string; desc: string }[] = [
   { key: "sedan", label: "Sedan", desc: "BMW 3 Series" },
   { key: "suv", label: "SUV", desc: "Jeep Grand Cherokee" },
-  { key: "minisuv", label: "Mini SUV", desc: "Honda HR-V" },
   { key: "pickup", label: "Pickup", desc: "Toyota Hilux" },
   { key: "coupe", label: "Coupe", desc: "Audi A5" },
   { key: "hatchback", label: "Hatchback", desc: "VW Golf" },
