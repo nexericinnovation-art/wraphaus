@@ -62,18 +62,6 @@ const HeroSection = () => {
 
       <div className="relative container mx-auto px-4 pt-20 lg:pt-0">
         <div className="max-w-2xl">
-          {/* Proudly Kenyan badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 rounded-full px-4 py-1.5 mb-6"
-          >
-            <span className="text-xs font-semibold text-primary uppercase tracking-widest">
-              🇰🇪 Proudly Kenyan
-            </span>
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

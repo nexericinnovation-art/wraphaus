@@ -85,7 +85,7 @@ const Footer = () => {
 
         <div className="mt-10 pt-6 border-t border-border/10 text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Its Wrap Haus. All rights reserved. 🇰🇪 Proudly Kenyan.
+            © {new Date().getFullYear()} Its Wrap Haus. All rights reserved.
           </p>
         </div>
       </div>

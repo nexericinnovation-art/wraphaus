@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    --background: 30 5% 96%;
-    --foreground: 30 10% 12%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
-    --card: 30 5% 100%;
-    --card-foreground: 30 10% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 30 5% 100%;
-    --popover-foreground: 30 10% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 42 78% 47%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 8% 18%;
-    --secondary-foreground: 35 20% 92%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 30 6% 92%;
-    --muted-foreground: 30 5% 45%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 15 65% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 8% 88%;
-    --input: 30 8% 88%;
-    --ring: 42 78% 47%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
 
     --radius: 0.5rem;
 
     /* Custom tokens */
-    --gold: 42 78% 47%;
-    --gold-light: 42 70% 62%;
-    --gold-dark: 42 80% 35%;
-    --dark-surface: 30 12% 8%;
-    --dark-surface-foreground: 35 20% 92%;
-    --warm-neutral: 30 8% 22%;
+    --gold: 217 91% 60%;
+    --gold-light: 217 80% 70%;
+    --gold-dark: 217 91% 45%;
+    --dark-surface: 222 47% 11%;
+    --dark-surface-foreground: 210 40% 96%;
+    --warm-neutral: 215 20% 30%;
     --kenyan-green: 145 45% 32%;
     --kenyan-red: 0 65% 45%;
     --earth-brown: 25 35% 30%;
-    --gradient-gold: linear-gradient(135deg, hsl(42, 78%, 47%), hsl(42, 70%, 62%));
-    --gradient-dark: linear-gradient(180deg, hsl(30, 12%, 6%), hsl(30, 12%, 12%));
-    --shadow-glow: 0 0 30px hsl(42 78% 47% / 0.25);
-    --shadow-card: 0 8px 32px hsl(30 10% 10% / 0.08);
+    --gradient-gold: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 70%));
+    --gradient-dark: linear-gradient(180deg, hsl(222, 47%, 8%), hsl(222, 47%, 14%));
+    --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.25);
+    --shadow-card: 0 8px 32px hsl(222 47% 11% / 0.08);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -58,29 +58,29 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 42 78% 47%;
+    --sidebar-ring: 217 91% 60%;
   }
 
   .dark {
-    --background: 30 12% 6%;
-    --foreground: 35 20% 92%;
-    --card: 30 12% 10%;
-    --card-foreground: 35 20% 92%;
-    --popover: 30 12% 10%;
-    --popover-foreground: 35 20% 92%;
-    --primary: 42 78% 47%;
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 10%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 35 20% 92%;
-    --secondary-foreground: 30 12% 8%;
-    --muted: 30 12% 14%;
-    --muted-foreground: 30 8% 55%;
-    --accent: 15 65% 50%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 222 47% 14%;
+    --muted-foreground: 215 16% 55%;
+    --accent: 217 80% 70%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 30 10% 16%;
-    --input: 30 10% 16%;
-    --ring: 42 78% 47%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 217 91% 60%;
   }
 }
 
@@ -100,14 +100,14 @@
 
 @layer utilities {
   .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(42, 78%, 47%), hsl(42, 70%, 65%));
+    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 75%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-primary {
-    background: linear-gradient(135deg, hsl(42, 78%, 47%), hsl(42, 70%, 65%));
+    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 75%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -128,11 +128,11 @@
 
   /* African geometric pattern overlay */
   .african-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a22c' fill-opacity='0.06'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3Cpath d='M30 10L50 30L30 50L10 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.06'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3Cpath d='M30 10L50 30L30 50L10 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
 
   .african-border {
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c8a22c' stroke-width='1' opacity='0.3'%3E%3Cpath d='M0 6L10 0L20 6L30 0L40 6'/%3E%3Cpath d='M0 6L10 12L20 6L30 12L40 6'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.3'%3E%3Cpath d='M0 6L10 0L20 6L30 0L40 6'/%3E%3Cpath d='M0 6L10 12L20 6L30 12L40 6'/%3E%3C/g%3E%3C/svg%3E");
     background-repeat: repeat-x;
     height: 12px;
   }
