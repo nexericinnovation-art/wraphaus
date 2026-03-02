@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-export type VehicleType = "sedan" | "suv" | "pickup" | "coupe" | "hatchback";
+export type VehicleType = "sedan" | "coupe" | "pickup" | "sports" | "supercar";
 
 interface VehicleProps {
   color: string;
@@ -13,19 +13,19 @@ interface VehicleProps {
 
 const MODEL_URLS: Record<VehicleType, string> = {
   sedan: "/models/sedan.glb",
-  suv: "/models/suv.glb",
-  pickup: "/models/pickup.glb",
   coupe: "/models/coupe.glb",
-  hatchback: "/models/hatchback.glb",
+  pickup: "/models/pickup.glb",
+  sports: "/models/sports.glb",
+  supercar: "/models/supercar.glb",
 };
 
-// Scale and position adjustments per model
+// Scale and position adjustments per model (tuned to each GLB's bounding box)
 const MODEL_CONFIG: Record<VehicleType, { scale: number; position: [number, number, number] }> = {
-  sedan: { scale: 0.8, position: [0, -0.5, 0] },
-  suv: { scale: 0.8, position: [0, -0.5, 0] },
-  pickup: { scale: 0.35, position: [0, -0.5, 0] },
-  coupe: { scale: 0.5, position: [0, -0.5, 0] },
-  hatchback: { scale: 1.2, position: [0, -0.5, 0] },
+  sedan: { scale: 0.006, position: [0, -0.5, 0] },      // BB ~230x117x489, needs heavy downscale
+  coupe: { scale: 0.7, position: [0, -0.5, 0] },         // BB ~1.9x1.4x4.6
+  pickup: { scale: 0.65, position: [0, -0.5, 0] },       // BB ~2.3x1.85x5.18
+  sports: { scale: 0.7, position: [0, -0.5, 0] },        // BB ~1.95x1.27x4.65
+  supercar: { scale: 0.65, position: [0, -0.5, 0] },     // BB ~2.03x1.42x4.82
 };
 
 const GLBVehicle = ({ color, roughness, autoRotate = true, type }: VehicleProps & { type: VehicleType }) => {
@@ -77,18 +77,18 @@ const GLBVehicle = ({ color, roughness, autoRotate = true, type }: VehicleProps 
 
 // Create wrapper components for each vehicle type
 export const SedanModel = (props: VehicleProps) => <GLBVehicle {...props} type="sedan" />;
-export const SUVModel = (props: VehicleProps) => <GLBVehicle {...props} type="suv" />;
-export const PickupModel = (props: VehicleProps) => <GLBVehicle {...props} type="pickup" />;
 export const CoupeModel = (props: VehicleProps) => <GLBVehicle {...props} type="coupe" />;
-export const HatchbackModel = (props: VehicleProps) => <GLBVehicle {...props} type="hatchback" />;
+export const PickupModel = (props: VehicleProps) => <GLBVehicle {...props} type="pickup" />;
+export const SportsModel = (props: VehicleProps) => <GLBVehicle {...props} type="sports" />;
+export const SupercarModel = (props: VehicleProps) => <GLBVehicle {...props} type="supercar" />;
 
 // Map for dynamic rendering
 export const vehicleComponents: Record<VehicleType, React.FC<VehicleProps>> = {
   sedan: SedanModel,
-  suv: SUVModel,
-  pickup: PickupModel,
   coupe: CoupeModel,
-  hatchback: HatchbackModel,
+  pickup: PickupModel,
+  sports: SportsModel,
+  supercar: SupercarModel,
 };
 
 // Preload all models
