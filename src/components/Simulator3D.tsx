@@ -27,11 +27,11 @@ const finishes = [
 ];
 
 const vehicleTypes: { key: VehicleType; label: string; desc: string }[] = [
-  { key: "sedan", label: "Sedan", desc: "BMW 3 Series" },
-  { key: "suv", label: "SUV", desc: "Jeep Grand Cherokee" },
-  { key: "pickup", label: "Pickup", desc: "Toyota Hilux" },
-  { key: "coupe", label: "Coupe", desc: "Audi A5" },
-  { key: "hatchback", label: "Hatchback", desc: "VW Golf" },
+  { key: "sedan", label: "Sedan", desc: "Luxury Sedan" },
+  { key: "coupe", label: "Muscle Car", desc: "American Muscle" },
+  { key: "pickup", label: "Pickup", desc: "Pickup Truck" },
+  { key: "sports", label: "Sports Car", desc: "GT Sports" },
+  { key: "supercar", label: "Supercar", desc: "Lamborghini" },
 ];
 
 const Simulator3D = () => {
