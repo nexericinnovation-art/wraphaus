@@ -15,41 +15,41 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 217 91% 60%;
+    --primary: 42 90% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 160 50% 38%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 40 20% 94%;
+    --muted-foreground: 30 10% 45%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 160 50% 38%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --border: 35 20% 88%;
+    --input: 35 20% 88%;
+    --ring: 42 90% 55%;
 
     --radius: 0.5rem;
 
     /* Custom tokens */
-    --gold: 217 91% 60%;
-    --gold-light: 217 80% 70%;
-    --gold-dark: 217 91% 45%;
-    --dark-surface: 222 47% 11%;
-    --dark-surface-foreground: 210 40% 96%;
-    --warm-neutral: 215 20% 30%;
-    --kenyan-green: 145 45% 32%;
+    --gold: 42 90% 55%;
+    --gold-light: 45 85% 65%;
+    --gold-dark: 38 90% 42%;
+    --dark-surface: 220 20% 12%;
+    --dark-surface-foreground: 40 20% 94%;
+    --warm-neutral: 30 15% 30%;
+    --kenyan-green: 160 50% 38%;
     --kenyan-red: 0 65% 45%;
     --earth-brown: 25 35% 30%;
-    --gradient-gold: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 70%));
-    --gradient-dark: linear-gradient(180deg, hsl(222, 47%, 8%), hsl(222, 47%, 14%));
-    --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.25);
-    --shadow-card: 0 8px 32px hsl(222 47% 11% / 0.08);
+    --gradient-gold: linear-gradient(135deg, hsl(42, 90%, 55%), hsl(45, 85%, 65%));
+    --gradient-dark: linear-gradient(180deg, hsl(220, 20%, 8%), hsl(220, 20%, 14%));
+    --shadow-glow: 0 0 30px hsl(42 90% 55% / 0.3);
+    --shadow-card: 0 8px 32px hsl(220 20% 12% / 0.1);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -62,25 +62,25 @@
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 96%;
-    --card: 222 47% 10%;
-    --card-foreground: 210 40% 96%;
-    --popover: 222 47% 10%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 217 91% 60%;
+    --background: 220 20% 6%;
+    --foreground: 40 20% 94%;
+    --card: 220 20% 10%;
+    --card-foreground: 40 20% 94%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 40 20% 94%;
+    --primary: 42 90% 55%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 222 47% 14%;
-    --muted-foreground: 215 16% 55%;
-    --accent: 217 80% 70%;
+    --secondary: 160 50% 38%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 20% 14%;
+    --muted-foreground: 40 15% 55%;
+    --accent: 160 45% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
-    --ring: 217 91% 60%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 42 90% 55%;
   }
 }
 
@@ -100,14 +100,14 @@
 
 @layer utilities {
   .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 75%));
+    background: linear-gradient(135deg, hsl(42, 90%, 55%), hsl(45, 85%, 70%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-primary {
-    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 80%, 75%));
+    background: linear-gradient(135deg, hsl(42, 90%, 55%), hsl(160, 50%, 42%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -128,11 +128,11 @@
 
   /* African geometric pattern overlay */
   .african-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.06'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3Cpath d='M30 10L50 30L30 50L10 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a017' fill-opacity='0.06'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3Cpath d='M30 10L50 30L30 50L10 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
 
   .african-border {
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.3'%3E%3Cpath d='M0 6L10 0L20 6L30 0L40 6'/%3E%3Cpath d='M0 6L10 12L20 6L30 12L40 6'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4a017' stroke-width='1' opacity='0.3'%3E%3Cpath d='M0 6L10 0L20 6L30 0L40 6'/%3E%3Cpath d='M0 6L10 12L20 6L30 12L40 6'/%3E%3C/g%3E%3C/svg%3E");
     background-repeat: repeat-x;
     height: 12px;
   }
