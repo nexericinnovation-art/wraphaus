@@ -14,7 +14,7 @@ const galleryItems = [
   { src: gallery2, title: "Electric Blue SUV Gloss", tag: "Full Wrap" },
   { src: gallery3, title: "Satin Red Coupe Finish", tag: "Full Wrap" },
   { src: gallery4, title: "PPF Installation", tag: "PPF" },
-  { src: gallery5, title: "Metallic Gold Pickup", tag: "Full Wrap" },
+  { src: gallery5, title: "Metallic Gold Sedan", tag: "Full Wrap" },
   { src: gallery6, title: "Ceramic Coating Detail", tag: "Ceramic" },
 ];
 
