@@ -39,6 +39,8 @@ const HeroSection = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1.2, ease: "easeInOut" }}
             className="absolute inset-0 w-full h-full object-cover"
+            loading={current === 0 ? "eager" : "lazy"}
+            decoding="async"
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30" />

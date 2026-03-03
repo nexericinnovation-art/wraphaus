@@ -105,8 +105,9 @@ const Services = () => {
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-72 lg:h-80 object-cover"
+                      className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>

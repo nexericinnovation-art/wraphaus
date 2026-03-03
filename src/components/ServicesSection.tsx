@@ -68,12 +68,13 @@ const ServicesSection = () => {
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="group rounded-2xl border border-border bg-card shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
             >
-              <div className="relative h-52 overflow-hidden">
+              <div className="relative h-44 sm:h-52 overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
               </div>
