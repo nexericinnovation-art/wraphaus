@@ -146,7 +146,7 @@ const Simulator3D = () => {
           </div>
 
           {/* 3D Canvas */}
-          <div className="order-1 lg:order-2 aspect-[4/3] lg:aspect-[16/10] rounded-2xl overflow-hidden border border-border/10 bg-gradient-to-b from-muted/5 to-muted/10 relative">
+          <div className="order-1 lg:order-2 aspect-square sm:aspect-[4/3] lg:aspect-[16/10] rounded-2xl overflow-hidden border border-border/10 bg-gradient-to-b from-muted/5 to-muted/10 relative touch-manipulation">
             <Canvas
               camera={{ position: [5, 3, 5], fov: 45 }}
               shadows

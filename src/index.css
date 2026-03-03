@@ -141,3 +141,39 @@
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
   }
 }
+
+/* Global responsive image defaults */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive image container helper */
+.img-responsive {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Smooth touch scrolling on mobile */
+@media (hover: none) and (pointer: coarse) {
+  .touch-pan {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* Prevent layout shift from images */
+.img-aspect-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.img-aspect-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.img-aspect-3-2 {
+  aspect-ratio: 3 / 2;
+}

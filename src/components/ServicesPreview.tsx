@@ -56,12 +56,13 @@ const ServicesPreview = () => {
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="group rounded-2xl border border-border bg-card shadow-card hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
             >
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-44 sm:h-56 overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
               </div>
