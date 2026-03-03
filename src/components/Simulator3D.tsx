@@ -28,9 +28,7 @@ const finishes = [
 
 const vehicleTypes: { key: VehicleType; label: string; desc: string }[] = [
   { key: "sedan", label: "Sedan", desc: "Audi Luxury Sedan" },
-  { key: "coupe", label: "Muscle Car", desc: "American Muscle" },
   { key: "suv", label: "SUV", desc: "Sport Utility" },
-  { key: "sports", label: "Sports Car", desc: "GT Sports" },
   { key: "supercar", label: "Supercar", desc: "Lamborghini" },
 ];
 
