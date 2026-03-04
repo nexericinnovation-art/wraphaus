@@ -237,7 +237,7 @@ const Simulator3D = () => {
             </Canvas>
 
             <div className="absolute top-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5">
-              <span className="text-xs font-semibold text-white">Lamborghini Supercar</span>
+              <span className="text-xs font-semibold text-white">Sport Utility Vehicle</span>
             </div>
 
             <div className="absolute bottom-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
