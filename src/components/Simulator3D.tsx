@@ -57,7 +57,7 @@ const Simulator3D = () => {
     Math.abs(curr.level - tintLevel) < Math.abs(prev.level - tintLevel) ? curr : prev
   );
 
-  const whatsappMessage = `Hi! I'd like a ${selectedColor.name} ${selectedFinish.name} wrap${tintLevel > 0 ? ` with ${currentTintPreset.name} tint (${currentTintPreset.vlt}% VLT)` : ""} for my vehicle.`;
+  const whatsappMessage = `Hi! I'd like a ${selectedColor.name} ${selectedFinish.name} wrap${tintLevel > 0 ? ` with ${currentTintPreset.name} tint (${currentTintPreset.vlt}% VLT)${selectedChameleon.isChameleon ? ` - ${selectedChameleon.name} Chameleon` : ""}` : ""} for my vehicle.`;
 
   return (
     <div className="min-h-screen bg-dark-surface relative overflow-hidden">
