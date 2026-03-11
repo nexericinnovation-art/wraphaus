@@ -10,7 +10,7 @@ interface SimulatorVehicleProps {
   autoRotate?: boolean;
 }
 
-const MODEL_URL = "/models/suv.glb";
+const MODEL_URL = "/models/land-cruiser.glb";
 
 // Mesh/material name patterns to EXCLUDE from wrap coloring
 const EXCLUDED_FROM_WRAP = [
