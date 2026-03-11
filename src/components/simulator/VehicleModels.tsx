@@ -111,7 +111,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, autoRotate = true }: Si
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.5, 0]} scale={0.65}>
+    <group ref={groupRef} position={[0, -1, 0]} scale={0.8}>
       <primitive object={clonedScene} />
     </group>
   );
