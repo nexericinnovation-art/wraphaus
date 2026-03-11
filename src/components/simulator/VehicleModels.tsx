@@ -35,8 +35,9 @@ function matchesAny(name: string, patterns: string[]): boolean {
   return patterns.some((p) => lower.includes(p));
 }
 
-const SimulatorVehicle = ({ color, roughness, tintLevel, autoRotate = true }: SimulatorVehicleProps) => {
+const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, autoRotate = true }: SimulatorVehicleProps) => {
   const groupRef = useRef<THREE.Group>(null);
+  const timeRef = useRef(0);
   const { scene } = useGLTF(MODEL_URL);
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
 
