@@ -7,6 +7,8 @@ interface SimulatorVehicleProps {
   color: string;
   roughness: number;
   tintLevel: number; // 0 = no tint, 1 = limo (darkest)
+  tintColor?: string; // hex color for tint (default dark blue-black)
+  isChameleon?: boolean; // chameleon/iridescent tint effect
   autoRotate?: boolean;
 }
 
