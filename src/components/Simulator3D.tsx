@@ -166,6 +166,32 @@ const Simulator3D = () => {
             ) : (
               /* Tint controls */
               <div className="space-y-6">
+                {/* Tint zone selector */}
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    Tint Area
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2">
+                    {([
+                      { value: "all" as TintZone, label: "All Glass" },
+                      { value: "windscreen" as TintZone, label: "Windscreen" },
+                      { value: "windows" as TintZone, label: "Windows Only" },
+                    ]).map((zone) => (
+                      <button
+                        key={zone.value}
+                        onClick={() => setTintZone(zone.value)}
+                        className={`px-2 py-2.5 rounded-lg text-xs font-medium transition-all border text-center ${
+                          tintZone === zone.value
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/20 text-muted-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        {zone.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
                     <Sun className="w-4 h-4 text-primary" />

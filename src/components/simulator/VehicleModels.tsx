@@ -3,14 +3,20 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
+type TintZone = "all" | "windscreen" | "windows";
+
 interface SimulatorVehicleProps {
   color: string;
   roughness: number;
-  tintLevel: number; // 0 = no tint, 1 = limo (darkest)
-  tintColor?: string; // hex color for tint (default dark blue-black)
-  isChameleon?: boolean; // chameleon/iridescent tint effect
+  tintLevel: number;
+  tintColor?: string;
+  isChameleon?: boolean;
+  tintZone?: TintZone;
   autoRotate?: boolean;
 }
+
+const WINDSCREEN_PATTERNS = ["windshield", "windscreen", "front_glass", "frontglass"];
+const SIDE_WINDOW_PATTERNS = ["window", "side_glass", "rear_glass", "rearglass", "sideglass"];
 
 const MODEL_URL = "/models/land-cruiser.glb";
 
