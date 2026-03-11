@@ -195,8 +195,38 @@ const Simulator3D = () => {
                   ))}
                 </div>
 
+                {/* Chameleon tint */}
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    Chameleon Tint
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2">
+                    {chameleonTints.map((ch) => (
+                      <button
+                        key={ch.name}
+                        onClick={() => setSelectedChameleon(ch)}
+                        className={`px-2 py-2.5 rounded-lg text-xs font-medium transition-all border text-center ${
+                          selectedChameleon.name === ch.name
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/20 text-muted-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        <div
+                          className="w-4 h-4 rounded-full mx-auto mb-1"
+                          style={{
+                            background: ch.isChameleon
+                              ? `linear-gradient(135deg, ${ch.hex}, #c8a22c, ${ch.hex})`
+                              : "hsl(var(--muted))",
+                          }}
+                        />
+                        {ch.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <p className="text-sm text-muted-foreground">
-                  Current: <span className="text-foreground font-medium">{currentTintPreset.name} ({currentTintPreset.vlt}% VLT)</span>
+                  Current: <span className="text-foreground font-medium">{currentTintPreset.name} ({currentTintPreset.vlt}% VLT){selectedChameleon.isChameleon ? ` • ${selectedChameleon.name}` : ""}</span>
                 </p>
               </div>
             )}
