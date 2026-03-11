@@ -84,6 +84,20 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
     });
   }, [clonedScene, color, roughness]);
 
+  // Helper: check if a mesh/mat should be tinted based on zone
+  const shouldTintMesh = (meshName: string, matName: string, mat: THREE.MeshStandardMaterial) => {
+    const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
+      (mat.transparent && mat.opacity < 0.9);
+    if (!isGlass) return false;
+
+    const isWindscreen = matchesAny(meshName, WINDSCREEN_PATTERNS) || matchesAny(matName, WINDSCREEN_PATTERNS);
+    const isSideWindow = matchesAny(meshName, SIDE_WINDOW_PATTERNS) || matchesAny(matName, SIDE_WINDOW_PATTERNS);
+
+    if (tintZone === "windscreen") return isWindscreen || (!isSideWindow && !isWindscreen); // windscreen + unidentified glass
+    if (tintZone === "windows") return isSideWindow || (!isSideWindow && !isWindscreen); // side windows + unidentified
+    return true; // "all"
+  };
+
   // Apply tint to windows/glass
   useEffect(() => {
     const baseTintColor = new THREE.Color(tintColorHex || "#1a1a2e");
@@ -98,19 +112,24 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
           (mat.transparent && mat.opacity < 0.9);
-
         if (!isGlass) return;
 
         mat.transparent = true;
-        const baseOpacity = 0.35;
-        const tintedOpacity = baseOpacity + tintLevel * 0.55;
-        mat.opacity = tintedOpacity;
-        mat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
+        if (shouldTintMesh(meshName, matName, mat)) {
+          const baseOpacity = 0.35;
+          const tintedOpacity = baseOpacity + tintLevel * 0.55;
+          mat.opacity = tintedOpacity;
+          mat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
+        } else {
+          // Reset untinted glass
+          mat.opacity = 0.35;
+          mat.color.set(0x88ccff);
+        }
         mat.roughness = 0.05;
         mat.needsUpdate = true;
       });
     });
-  }, [clonedScene, tintLevel, tintColorHex]);
+  }, [clonedScene, tintLevel, tintColorHex, tintZone]);
 
   // Chameleon iridescent effect — animate glass color shift
   useFrame((_, delta) => {
@@ -127,9 +146,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       materials.forEach((mat) => {
         if (!(mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial)) return;
         const matName = (mat.name || "").toLowerCase();
-        const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (mat.transparent && mat.opacity < 0.9);
-        if (!isGlass) return;
+        if (!shouldTintMesh(meshName, matName, mat)) return;
         mat.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
         mat.needsUpdate = true;
       });
