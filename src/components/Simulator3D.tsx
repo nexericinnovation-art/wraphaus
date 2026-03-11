@@ -49,6 +49,7 @@ const Simulator3D = () => {
   const [selectedColor, setSelectedColor] = useState(wrapColors[6]);
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
   const [tintLevel, setTintLevel] = useState(0);
+  const [selectedChameleon, setSelectedChameleon] = useState(chameleonTints[0]);
   const [activeTab, setActiveTab] = useState<TabMode>("wrap");
 
   const effectiveRoughness = selectedFinish.roughness;
