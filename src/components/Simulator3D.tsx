@@ -41,7 +41,13 @@ const chameleonTints = [
   { name: "Blue-Gold", hex: "#1e40af", isChameleon: true },
   { name: "Red-Copper", hex: "#991b1b", isChameleon: true },
   { name: "Emerald Shift", hex: "#065f46", isChameleon: true },
+  { name: "Pink-Gold", hex: "#db2777", isChameleon: true },
+  { name: "Ocean Teal", hex: "#0d9488", isChameleon: true },
+  { name: "Sunset Bronze", hex: "#b45309", isChameleon: true },
+  { name: "Violet-Blue", hex: "#7c3aed", isChameleon: true },
 ];
+
+type TintZone = "all" | "windscreen" | "windows";
 
 type TabMode = "wrap" | "tint";
 
@@ -50,6 +56,7 @@ const Simulator3D = () => {
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
   const [tintLevel, setTintLevel] = useState(0);
   const [selectedChameleon, setSelectedChameleon] = useState(chameleonTints[0]);
+  const [tintZone, setTintZone] = useState<TintZone>("all");
   const [activeTab, setActiveTab] = useState<TabMode>("wrap");
 
   const effectiveRoughness = selectedFinish.roughness;
@@ -159,6 +166,32 @@ const Simulator3D = () => {
             ) : (
               /* Tint controls */
               <div className="space-y-6">
+                {/* Tint zone selector */}
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    Tint Area
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2">
+                    {([
+                      { value: "all" as TintZone, label: "All Glass" },
+                      { value: "windscreen" as TintZone, label: "Windscreen" },
+                      { value: "windows" as TintZone, label: "Windows Only" },
+                    ]).map((zone) => (
+                      <button
+                        key={zone.value}
+                        onClick={() => setTintZone(zone.value)}
+                        className={`px-2 py-2.5 rounded-lg text-xs font-medium transition-all border text-center ${
+                          tintZone === zone.value
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/20 text-muted-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        {zone.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
                     <Sun className="w-4 h-4 text-primary" />
@@ -261,6 +294,7 @@ const Simulator3D = () => {
                   tintLevel={tintLevel}
                   tintColor={selectedChameleon.hex}
                   isChameleon={selectedChameleon.isChameleon}
+                  tintZone={tintZone}
                 />
 
                 <ContactShadows position={[0, -0.95, 0]} opacity={0.5} scale={12} blur={2.5} />
