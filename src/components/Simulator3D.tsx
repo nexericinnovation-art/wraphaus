@@ -268,6 +268,7 @@ const Simulator3D = () => {
                   tintLevel={tintLevel}
                   tintColor={selectedChameleon.hex}
                   isChameleon={selectedChameleon.isChameleon}
+                  tintZone={tintZone}
                 />
 
                 <ContactShadows position={[0, -0.95, 0]} opacity={0.5} scale={12} blur={2.5} />
