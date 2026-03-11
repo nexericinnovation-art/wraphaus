@@ -56,6 +56,7 @@ const Simulator3D = () => {
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
   const [tintLevel, setTintLevel] = useState(0);
   const [selectedChameleon, setSelectedChameleon] = useState(chameleonTints[0]);
+  const [tintZone, setTintZone] = useState<TintZone>("all");
   const [activeTab, setActiveTab] = useState<TabMode>("wrap");
 
   const effectiveRoughness = selectedFinish.roughness;
