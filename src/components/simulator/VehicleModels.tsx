@@ -18,7 +18,7 @@ const EXCLUDED_FROM_WRAP = [
   "tire", "tyre", "rubber",
   "wheel", "rim", "hub", "spoke", "brake", "caliper", "rotor", "disc",
   "light", "lamp", "lens", "headlight", "taillight", "signal", "indicator",
-  "chrome", "emblem", "badge", "logo", "grille", "grill",
+  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper_lower", "front_grille",
   "mirror_glass", "exhaust", "pipe", "muffler",
   "interior", "seat", "dash", "steering", "carpet", "trim_interior",
 ];
