@@ -35,6 +35,14 @@ const tintPresets = [
   { name: "Limo", vlt: 5, level: 1 },
 ];
 
+const chameleonTints = [
+  { name: "None", hex: "#1a1a2e", isChameleon: false },
+  { name: "Purple-Green", hex: "#6b21a8", isChameleon: true },
+  { name: "Blue-Gold", hex: "#1e40af", isChameleon: true },
+  { name: "Red-Copper", hex: "#991b1b", isChameleon: true },
+  { name: "Emerald Shift", hex: "#065f46", isChameleon: true },
+];
+
 type TabMode = "wrap" | "tint";
 
 const Simulator3D = () => {
