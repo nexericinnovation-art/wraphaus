@@ -7,6 +7,8 @@ interface SimulatorVehicleProps {
   color: string;
   roughness: number;
   tintLevel: number; // 0 = no tint, 1 = limo (darkest)
+  tintColor?: string; // hex color for tint (default dark blue-black)
+  isChameleon?: boolean; // chameleon/iridescent tint effect
   autoRotate?: boolean;
 }
 
@@ -18,7 +20,7 @@ const EXCLUDED_FROM_WRAP = [
   "tire", "tyre", "rubber",
   "wheel", "rim", "hub", "spoke", "brake", "caliper", "rotor", "disc",
   "light", "lamp", "lens", "headlight", "taillight", "signal", "indicator",
-  "chrome", "emblem", "badge", "logo", "grille", "grill",
+  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper_lower", "front_grille",
   "mirror_glass", "exhaust", "pipe", "muffler",
   "interior", "seat", "dash", "steering", "carpet", "trim_interior",
 ];
@@ -33,8 +35,9 @@ function matchesAny(name: string, patterns: string[]): boolean {
   return patterns.some((p) => lower.includes(p));
 }
 
-const SimulatorVehicle = ({ color, roughness, tintLevel, autoRotate = true }: SimulatorVehicleProps) => {
+const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, autoRotate = true }: SimulatorVehicleProps) => {
   const groupRef = useRef<THREE.Group>(null);
+  const timeRef = useRef(0);
   const { scene } = useGLTF(MODEL_URL);
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
 
@@ -77,7 +80,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, autoRotate = true }: Si
 
   // Apply tint to windows/glass
   useEffect(() => {
-    const tintColor = new THREE.Color(0x1a1a2e); // dark blue-black tint
+    const baseTintColor = new THREE.Color(tintColorHex || "#1a1a2e");
     clonedScene.traverse((child) => {
       if (!(child instanceof THREE.Mesh) || !child.material) return;
       const meshName = (child.name || "").toLowerCase();
@@ -93,21 +96,38 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, autoRotate = true }: Si
         if (!isGlass) return;
 
         mat.transparent = true;
-        // tintLevel 0 = clear (opacity ~0.3 original), 1 = limo dark
         const baseOpacity = 0.35;
-        const tintedOpacity = baseOpacity + tintLevel * 0.55; // 0.35 → 0.9
+        const tintedOpacity = baseOpacity + tintLevel * 0.55;
         mat.opacity = tintedOpacity;
-        mat.color.lerpColors(new THREE.Color(0x88ccff), tintColor, tintLevel);
+        mat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
         mat.roughness = 0.05;
         mat.needsUpdate = true;
       });
     });
-  }, [clonedScene, tintLevel]);
+  }, [clonedScene, tintLevel, tintColorHex]);
 
+  // Chameleon iridescent effect — animate glass color shift
   useFrame((_, delta) => {
     if (groupRef.current && autoRotate) {
       groupRef.current.rotation.y += delta * 0.15;
     }
+    if (!isChameleon || tintLevel === 0) return;
+    timeRef.current += delta * 0.5;
+    const hue = (timeRef.current % 1);
+    clonedScene.traverse((child) => {
+      if (!(child instanceof THREE.Mesh) || !child.material) return;
+      const meshName = (child.name || "").toLowerCase();
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      materials.forEach((mat) => {
+        if (!(mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial)) return;
+        const matName = (mat.name || "").toLowerCase();
+        const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
+          (mat.transparent && mat.opacity < 0.9);
+        if (!isGlass) return;
+        mat.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
+        mat.needsUpdate = true;
+      });
+    });
   });
 
   return (

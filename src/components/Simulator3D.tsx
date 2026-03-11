@@ -35,12 +35,21 @@ const tintPresets = [
   { name: "Limo", vlt: 5, level: 1 },
 ];
 
+const chameleonTints = [
+  { name: "None", hex: "#1a1a2e", isChameleon: false },
+  { name: "Purple-Green", hex: "#6b21a8", isChameleon: true },
+  { name: "Blue-Gold", hex: "#1e40af", isChameleon: true },
+  { name: "Red-Copper", hex: "#991b1b", isChameleon: true },
+  { name: "Emerald Shift", hex: "#065f46", isChameleon: true },
+];
+
 type TabMode = "wrap" | "tint";
 
 const Simulator3D = () => {
   const [selectedColor, setSelectedColor] = useState(wrapColors[6]);
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
   const [tintLevel, setTintLevel] = useState(0);
+  const [selectedChameleon, setSelectedChameleon] = useState(chameleonTints[0]);
   const [activeTab, setActiveTab] = useState<TabMode>("wrap");
 
   const effectiveRoughness = selectedFinish.roughness;
@@ -48,7 +57,7 @@ const Simulator3D = () => {
     Math.abs(curr.level - tintLevel) < Math.abs(prev.level - tintLevel) ? curr : prev
   );
 
-  const whatsappMessage = `Hi! I'd like a ${selectedColor.name} ${selectedFinish.name} wrap${tintLevel > 0 ? ` with ${currentTintPreset.name} tint (${currentTintPreset.vlt}% VLT)` : ""} for my vehicle.`;
+  const whatsappMessage = `Hi! I'd like a ${selectedColor.name} ${selectedFinish.name} wrap${tintLevel > 0 ? ` with ${currentTintPreset.name} tint (${currentTintPreset.vlt}% VLT)${selectedChameleon.isChameleon ? ` - ${selectedChameleon.name} Chameleon` : ""}` : ""} for my vehicle.`;
 
   return (
     <div className="min-h-screen bg-dark-surface relative overflow-hidden">
@@ -186,8 +195,38 @@ const Simulator3D = () => {
                   ))}
                 </div>
 
+                {/* Chameleon tint */}
+                <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    Chameleon Tint
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2">
+                    {chameleonTints.map((ch) => (
+                      <button
+                        key={ch.name}
+                        onClick={() => setSelectedChameleon(ch)}
+                        className={`px-2 py-2.5 rounded-lg text-xs font-medium transition-all border text-center ${
+                          selectedChameleon.name === ch.name
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/20 text-muted-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        <div
+                          className="w-4 h-4 rounded-full mx-auto mb-1"
+                          style={{
+                            background: ch.isChameleon
+                              ? `linear-gradient(135deg, ${ch.hex}, #c8a22c, ${ch.hex})`
+                              : "hsl(var(--muted))",
+                          }}
+                        />
+                        {ch.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <p className="text-sm text-muted-foreground">
-                  Current: <span className="text-foreground font-medium">{currentTintPreset.name} ({currentTintPreset.vlt}% VLT)</span>
+                  Current: <span className="text-foreground font-medium">{currentTintPreset.name} ({currentTintPreset.vlt}% VLT){selectedChameleon.isChameleon ? ` • ${selectedChameleon.name}` : ""}</span>
                 </p>
               </div>
             )}
@@ -220,6 +259,8 @@ const Simulator3D = () => {
                   color={selectedColor.hex}
                   roughness={effectiveRoughness}
                   tintLevel={tintLevel}
+                  tintColor={selectedChameleon.hex}
+                  isChameleon={selectedChameleon.isChameleon}
                 />
 
                 <ContactShadows position={[0, -0.95, 0]} opacity={0.5} scale={12} blur={2.5} />
