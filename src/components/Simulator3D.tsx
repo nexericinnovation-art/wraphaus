@@ -41,7 +41,13 @@ const chameleonTints = [
   { name: "Blue-Gold", hex: "#1e40af", isChameleon: true },
   { name: "Red-Copper", hex: "#991b1b", isChameleon: true },
   { name: "Emerald Shift", hex: "#065f46", isChameleon: true },
+  { name: "Pink-Gold", hex: "#db2777", isChameleon: true },
+  { name: "Ocean Teal", hex: "#0d9488", isChameleon: true },
+  { name: "Sunset Bronze", hex: "#b45309", isChameleon: true },
+  { name: "Violet-Blue", hex: "#7c3aed", isChameleon: true },
 ];
+
+type TintZone = "all" | "windscreen" | "windows";
 
 type TabMode = "wrap" | "tint";
 
