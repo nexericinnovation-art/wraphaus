@@ -127,8 +127,9 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const materials = Array.isArray(child.material) ? child.material : [child.material];
 
       materials.forEach((mat) => {
-        if (!(mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial)) return;
-        const matName = (mat.name || "").toLowerCase();
+        if (!('color' in mat) || !('roughness' in mat)) return;
+        const stdMat = mat as THREE.MeshStandardMaterial;
+        const matName = (stdMat.name || "").toLowerCase();
 
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
           (mat.transparent && mat.opacity < 0.9);
