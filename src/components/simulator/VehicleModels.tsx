@@ -49,6 +49,22 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   const { scene } = useGLTF(url);
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
 
+  // Auto-fit: compute bounding box and derive scale + offset to normalize all models
+  const { autoScale, autoOffset } = useMemo(() => {
+    const box = new THREE.Box3().setFromObject(clonedScene);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const targetSize = 3.5; // desired size in scene units
+    const s = targetSize / maxDim;
+    return {
+      autoScale: s,
+      autoOffset: new THREE.Vector3(-center.x * s, -box.min.y * s - 1, -center.z * s),
+    };
+  }, [clonedScene]);
+
   // Apply wrap color to body panels only
   useEffect(() => {
     const bodyColor = new THREE.Color(color);
@@ -156,7 +172,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   });
 
   return (
-    <group ref={groupRef} position={[0, -1, 0]} scale={url.includes("audi") ? 0.005 : url.includes("hilux") ? 0.008 : 0.8}>
+    <group ref={groupRef} position={[autoOffset.x, autoOffset.y, autoOffset.z]} scale={autoScale}>
       <primitive object={clonedScene} />
     </group>
   );
