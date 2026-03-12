@@ -19,7 +19,7 @@ interface SimulatorVehicleProps {
 const WINDSCREEN_PATTERNS = ["windshield", "windscreen", "front_glass", "frontglass"];
 const SIDE_WINDOW_PATTERNS = ["window", "side_glass", "rear_glass", "rearglass", "sideglass"];
 
-const MODEL_URL = "/models/land-cruiser.glb";
+const DEFAULT_MODEL_URL = "/models/audi-rs5.glb";
 
 // Mesh/material name patterns to EXCLUDE from wrap coloring
 const EXCLUDED_FROM_WRAP = [
