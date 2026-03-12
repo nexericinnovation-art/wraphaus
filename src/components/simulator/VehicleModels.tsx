@@ -164,4 +164,5 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
 export default SimulatorVehicle;
 
-useGLTF.preload(MODEL_URL);
+useGLTF.preload(DEFAULT_MODEL_URL);
+useGLTF.preload("/models/land-cruiser.glb");

@@ -318,8 +318,21 @@ const Simulator3D = () => {
               </Suspense>
             </Canvas>
 
-            <div className="absolute top-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5">
-              <span className="text-xs font-semibold text-white">Toyota Land Cruiser 250</span>
+            <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+              {vehicles.map((v) => (
+                <button
+                  key={v.name}
+                  onClick={() => setSelectedVehicle(v)}
+                  className={`bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    selectedVehicle.name === v.name
+                      ? "text-primary border border-primary/50"
+                      : "text-white/70 hover:text-white border border-transparent"
+                  }`}
+                >
+                  <Car className="w-3 h-3" />
+                  {v.name}
+                </button>
+              ))}
             </div>
 
             <div className="absolute bottom-3 left-3 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
