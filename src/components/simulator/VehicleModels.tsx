@@ -132,22 +132,22 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
         const matName = (stdMat.name || "").toLowerCase();
 
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (mat.transparent && mat.opacity < 0.9);
+          (stdMat.transparent && stdMat.opacity < 0.9);
         if (!isGlass) return;
 
-        mat.transparent = true;
-        if (shouldTintMesh(meshName, matName, mat)) {
+        stdMat.transparent = true;
+        if (shouldTintMesh(meshName, matName, stdMat)) {
           const baseOpacity = 0.35;
           const tintedOpacity = baseOpacity + tintLevel * 0.55;
-          mat.opacity = tintedOpacity;
-          mat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
+          stdMat.opacity = tintedOpacity;
+          stdMat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
         } else {
           // Reset untinted glass
-          mat.opacity = 0.35;
-          mat.color.set(0x88ccff);
+          stdMat.opacity = 0.35;
+          stdMat.color.set(0x88ccff);
         }
-        mat.roughness = 0.05;
-        mat.needsUpdate = true;
+        stdMat.roughness = 0.05;
+        stdMat.needsUpdate = true;
       });
     });
   }, [clonedScene, tintLevel, tintColorHex, tintZone]);
