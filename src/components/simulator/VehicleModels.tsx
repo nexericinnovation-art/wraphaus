@@ -13,6 +13,7 @@ interface SimulatorVehicleProps {
   isChameleon?: boolean;
   tintZone?: TintZone;
   autoRotate?: boolean;
+  modelUrl?: string;
 }
 
 const WINDSCREEN_PATTERNS = ["windshield", "windscreen", "front_glass", "frontglass"];
