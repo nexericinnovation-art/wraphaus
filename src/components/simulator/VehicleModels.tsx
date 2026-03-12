@@ -172,7 +172,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   });
 
   return (
-    <group ref={groupRef} position={[0, -1, 0]} scale={url.includes("audi") ? 0.005 : url.includes("hilux") ? 0.008 : 0.8}>
+    <group ref={groupRef} position={[autoOffset.x, autoOffset.y, autoOffset.z]} scale={autoScale}>
       <primitive object={clonedScene} />
     </group>
   );
