@@ -63,6 +63,7 @@ const Simulator3D = () => {
   const [selectedChameleon, setSelectedChameleon] = useState(chameleonTints[0]);
   const [tintZone, setTintZone] = useState<TintZone>("all");
   const [activeTab, setActiveTab] = useState<TabMode>("wrap");
+  const [selectedVehicle, setSelectedVehicle] = useState(vehicles[0]);
 
   const effectiveRoughness = selectedFinish.roughness;
   const currentTintPreset = tintPresets.reduce((prev, curr) =>
