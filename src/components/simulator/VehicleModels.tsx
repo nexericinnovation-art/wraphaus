@@ -156,7 +156,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   });
 
   return (
-    <group ref={groupRef} position={[0, -1, 0]} scale={url.includes("audi") ? 0.005 : 0.8}>
+    <group ref={groupRef} position={[0, -1, 0]} scale={url.includes("audi") ? 0.005 : url.includes("hilux") ? 0.008 : 0.8}>
       <primitive object={clonedScene} />
     </group>
   );
@@ -166,3 +166,4 @@ export default SimulatorVehicle;
 
 useGLTF.preload(DEFAULT_MODEL_URL);
 useGLTF.preload("/models/land-cruiser.glb");
+useGLTF.preload("/models/hilux.glb");
