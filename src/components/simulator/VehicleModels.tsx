@@ -13,12 +13,13 @@ interface SimulatorVehicleProps {
   isChameleon?: boolean;
   tintZone?: TintZone;
   autoRotate?: boolean;
+  modelUrl?: string;
 }
 
 const WINDSCREEN_PATTERNS = ["windshield", "windscreen", "front_glass", "frontglass"];
 const SIDE_WINDOW_PATTERNS = ["window", "side_glass", "rear_glass", "rearglass", "sideglass"];
 
-const MODEL_URL = "/models/land-cruiser.glb";
+const DEFAULT_MODEL_URL = "/models/audi-rs5.glb";
 
 // Mesh/material name patterns to EXCLUDE from wrap coloring
 const EXCLUDED_FROM_WRAP = [
@@ -41,10 +42,11 @@ function matchesAny(name: string, patterns: string[]): boolean {
   return patterns.some((p) => lower.includes(p));
 }
 
-const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, tintZone = "all", autoRotate = true }: SimulatorVehicleProps) => {
+const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, tintZone = "all", autoRotate = true, modelUrl }: SimulatorVehicleProps) => {
+  const url = modelUrl || DEFAULT_MODEL_URL;
   const groupRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
-  const { scene } = useGLTF(MODEL_URL);
+  const { scene } = useGLTF(url);
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
 
   // Apply wrap color to body panels only
@@ -162,4 +164,5 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
 export default SimulatorVehicle;
 
-useGLTF.preload(MODEL_URL);
+useGLTF.preload(DEFAULT_MODEL_URL);
+useGLTF.preload("/models/land-cruiser.glb");
