@@ -1,9 +1,14 @@
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
-import { Paintbrush, RotateCcw, Sun } from "lucide-react";
+import { Paintbrush, RotateCcw, Sun, Car } from "lucide-react";
 import SimulatorVehicle from "./simulator/VehicleModels";
 import { Slider } from "@/components/ui/slider";
+
+const vehicles = [
+  { name: "Audi RS5", model: "/models/audi-rs5.glb" },
+  { name: "Toyota Land Cruiser 250", model: "/models/land-cruiser.glb" },
+];
 
 const wrapColors = [
   { name: "Gloss Black", hex: "#0a0a0a", roughness: 0.1 },
