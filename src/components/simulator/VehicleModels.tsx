@@ -166,3 +166,4 @@ export default SimulatorVehicle;
 
 useGLTF.preload(DEFAULT_MODEL_URL);
 useGLTF.preload("/models/land-cruiser.glb");
+useGLTF.preload("/models/hilux.glb");

@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 const vehicles = [
   { name: "Audi RS5", model: "/models/audi-rs5.glb" },
   { name: "Toyota Land Cruiser 250", model: "/models/land-cruiser.glb" },
+  { name: "Toyota Hilux", model: "/models/hilux.glb" },
 ];
 
 const wrapColors = [
