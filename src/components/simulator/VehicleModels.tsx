@@ -74,12 +74,14 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const materials = Array.isArray(child.material) ? child.material : [child.material];
 
       materials.forEach((mat) => {
-        if (!(mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial)) return;
-        const matName = (mat.name || "").toLowerCase();
+        // Support any material with a color property
+        if (!('color' in mat) || !('roughness' in mat)) return;
+        const stdMat = mat as THREE.MeshStandardMaterial;
+        const matName = (stdMat.name || "").toLowerCase();
 
         // Check if this is glass (for tint handling, skip wrap)
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (mat.transparent && mat.opacity < 0.9);
+          (stdMat.transparent && stdMat.opacity < 0.9);
 
         if (isGlass) return;
 
@@ -89,14 +91,14 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
         // Heuristic: very dark + rough = tire/rubber
         const hsl = { h: 0, s: 0, l: 0 };
-        mat.color.getHSL(hsl);
-        const isTireOrRubber = hsl.l < 0.08 && mat.roughness > 0.7;
+        stdMat.color.getHSL(hsl);
+        const isTireOrRubber = hsl.l < 0.08 && stdMat.roughness > 0.7;
 
         if (!isExcludedMesh && !isExcludedMat && !isTireOrRubber) {
-          mat.color.set(bodyColor);
-          mat.roughness = roughness;
-          mat.metalness = 0.6;
-          mat.needsUpdate = true;
+          stdMat.color.set(bodyColor);
+          stdMat.roughness = roughness;
+          stdMat.metalness = 0.6;
+          stdMat.needsUpdate = true;
         }
       });
     });
