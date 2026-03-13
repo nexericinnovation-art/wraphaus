@@ -180,12 +180,12 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const meshName = (child.name || "").toLowerCase();
       const materials = Array.isArray(child.material) ? child.material : [child.material];
       materials.forEach((mat) => {
-        if (!('color' in mat) || !('roughness' in mat)) return;
-        const stdMat = mat as THREE.MeshStandardMaterial;
-        const matName = (stdMat.name || "").toLowerCase();
-        if (!shouldTintMesh(meshName, matName, stdMat)) return;
-        stdMat.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
-        stdMat.needsUpdate = true;
+        if (!('color' in mat)) return;
+        const matAny = mat as any;
+        const matName = (mat.name || "").toLowerCase();
+        if (!shouldTintMesh(meshName, matName, mat)) return;
+        matAny.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
+        mat.needsUpdate = true;
       });
     });
   });
