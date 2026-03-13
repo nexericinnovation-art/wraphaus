@@ -112,36 +112,26 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
       materials.forEach((mat) => {
         // Support any material with a color property (MeshStandard, MeshPhong, MeshBasic, etc.)
-        if (!('color' in mat)) return;
+        if (!("color" in mat)) return;
         const matAny = mat as any;
         const matName = (mat.name || "").toLowerCase();
 
         // Check if this is glass (for tint handling, skip wrap)
-        const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
+        const isGlass =
+          matchesAny(meshName, GLASS_PATTERNS) ||
+          matchesAny(matName, GLASS_PATTERNS) ||
           (mat.transparent && mat.opacity < 0.9);
         if (isGlass) return;
 
-        // Check exclusions by mesh name and material name
-        const isExcludedMesh = matchesAny(meshName, EXCLUDED_FROM_WRAP);
-        const isExcludedMat = matchesAny(matName, EXCLUDED_FROM_WRAP);
+        if (!isBodyPanelTarget(url, meshName, matName)) return;
 
-        // Heuristic: very dark + rough = tire/rubber (only if roughness exists)
-        let isTireOrRubber = false;
-        if ('roughness' in matAny) {
-          const hsl = { h: 0, s: 0, l: 0 };
-          matAny.color.getHSL(hsl);
-          isTireOrRubber = hsl.l < 0.08 && matAny.roughness > 0.7;
-        }
-
-        if (!isExcludedMesh && !isExcludedMat && !isTireOrRubber) {
-          matAny.color.set(bodyColor);
-          if ('roughness' in matAny) matAny.roughness = roughness;
-          if ('metalness' in matAny) matAny.metalness = 0.6;
-          mat.needsUpdate = true;
-        }
+        matAny.color.set(bodyColor);
+        if ("roughness" in matAny) matAny.roughness = roughness;
+        if ("metalness" in matAny) matAny.metalness = 0.6;
+        mat.needsUpdate = true;
       });
     });
-  }, [clonedScene, color, roughness]);
+  }, [clonedScene, color, roughness, url]);
 
   // Helper: check if a mesh/mat should be tinted based on zone
   const shouldTintMesh = (meshName: string, matName: string, mat: THREE.Material) => {
