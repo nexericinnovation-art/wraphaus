@@ -88,31 +88,33 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const materials = Array.isArray(child.material) ? child.material : [child.material];
 
       materials.forEach((mat) => {
-        // Support any material with a color property
-        if (!('color' in mat) || !('roughness' in mat)) return;
-        const stdMat = mat as THREE.MeshStandardMaterial;
-        const matName = (stdMat.name || "").toLowerCase();
+        // Support any material with a color property (MeshStandard, MeshPhong, MeshBasic, etc.)
+        if (!('color' in mat)) return;
+        const matAny = mat as any;
+        const matName = (mat.name || "").toLowerCase();
 
         // Check if this is glass (for tint handling, skip wrap)
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (stdMat.transparent && stdMat.opacity < 0.9);
-
+          (mat.transparent && mat.opacity < 0.9);
         if (isGlass) return;
 
         // Check exclusions by mesh name and material name
         const isExcludedMesh = matchesAny(meshName, EXCLUDED_FROM_WRAP);
         const isExcludedMat = matchesAny(matName, EXCLUDED_FROM_WRAP);
 
-        // Heuristic: very dark + rough = tire/rubber
-        const hsl = { h: 0, s: 0, l: 0 };
-        stdMat.color.getHSL(hsl);
-        const isTireOrRubber = hsl.l < 0.08 && stdMat.roughness > 0.7;
+        // Heuristic: very dark + rough = tire/rubber (only if roughness exists)
+        let isTireOrRubber = false;
+        if ('roughness' in matAny) {
+          const hsl = { h: 0, s: 0, l: 0 };
+          matAny.color.getHSL(hsl);
+          isTireOrRubber = hsl.l < 0.08 && matAny.roughness > 0.7;
+        }
 
         if (!isExcludedMesh && !isExcludedMat && !isTireOrRubber) {
-          stdMat.color.set(bodyColor);
-          stdMat.roughness = roughness;
-          stdMat.metalness = 0.6;
-          stdMat.needsUpdate = true;
+          matAny.color.set(bodyColor);
+          if ('roughness' in matAny) matAny.roughness = roughness;
+          if ('metalness' in matAny) matAny.metalness = 0.6;
+          mat.needsUpdate = true;
         }
       });
     });
