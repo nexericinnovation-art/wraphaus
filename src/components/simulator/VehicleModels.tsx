@@ -27,9 +27,16 @@ const EXCLUDED_FROM_WRAP = [
   "tire", "tyre", "rubber",
   "wheel", "rim", "hub", "spoke", "brake", "caliper", "rotor", "disc",
   "light", "lamp", "lens", "headlight", "taillight", "signal", "indicator",
-  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper_lower", "front_grille",
-  "mirror_glass", "exhaust", "pipe", "muffler",
-  "interior", "seat", "dash", "steering", "carpet", "trim_interior",
+  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper", "front_grille",
+  "mirror", "exhaust", "pipe", "muffler",
+  "interior", "seat", "dash", "dashboard", "carpet", "trim_interior", "display", "console", "floor",
+  "cuero", "plastic", "defrost", "seatb",
+];
+
+const LAND_CRUISER_BODY_PATTERNS = ["carpaint", "carpaint_n2"];
+const HILUX_BODY_PATTERNS = [
+  "door", "hood", "fender", "quarter", "panel", "bed", "tailgate", "side", "body",
+  "primary", "hilux_mb", "chassis_primary",
 ];
 
 // Patterns that identify glass/window meshes for tinting
@@ -40,6 +47,22 @@ const GLASS_PATTERNS = [
 function matchesAny(name: string, patterns: string[]): boolean {
   const lower = name.toLowerCase();
   return patterns.some((p) => lower.includes(p));
+}
+
+function isBodyPanelTarget(modelUrl: string, meshName: string, matName: string): boolean {
+  const target = `${meshName} ${matName}`;
+
+  if (matchesAny(target, EXCLUDED_FROM_WRAP)) return false;
+
+  if (modelUrl.includes("land-cruiser")) {
+    return matchesAny(target, LAND_CRUISER_BODY_PATTERNS);
+  }
+
+  if (modelUrl.includes("hilux")) {
+    return matchesAny(target, HILUX_BODY_PATTERNS);
+  }
+
+  return true;
 }
 
 const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, tintZone = "all", autoRotate = true, modelUrl }: SimulatorVehicleProps) => {
@@ -89,36 +112,26 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
       materials.forEach((mat) => {
         // Support any material with a color property (MeshStandard, MeshPhong, MeshBasic, etc.)
-        if (!('color' in mat)) return;
+        if (!("color" in mat)) return;
         const matAny = mat as any;
         const matName = (mat.name || "").toLowerCase();
 
         // Check if this is glass (for tint handling, skip wrap)
-        const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
+        const isGlass =
+          matchesAny(meshName, GLASS_PATTERNS) ||
+          matchesAny(matName, GLASS_PATTERNS) ||
           (mat.transparent && mat.opacity < 0.9);
         if (isGlass) return;
 
-        // Check exclusions by mesh name and material name
-        const isExcludedMesh = matchesAny(meshName, EXCLUDED_FROM_WRAP);
-        const isExcludedMat = matchesAny(matName, EXCLUDED_FROM_WRAP);
+        if (!isBodyPanelTarget(url, meshName, matName)) return;
 
-        // Heuristic: very dark + rough = tire/rubber (only if roughness exists)
-        let isTireOrRubber = false;
-        if ('roughness' in matAny) {
-          const hsl = { h: 0, s: 0, l: 0 };
-          matAny.color.getHSL(hsl);
-          isTireOrRubber = hsl.l < 0.08 && matAny.roughness > 0.7;
-        }
-
-        if (!isExcludedMesh && !isExcludedMat && !isTireOrRubber) {
-          matAny.color.set(bodyColor);
-          if ('roughness' in matAny) matAny.roughness = roughness;
-          if ('metalness' in matAny) matAny.metalness = 0.6;
-          mat.needsUpdate = true;
-        }
+        matAny.color.set(bodyColor);
+        if ("roughness" in matAny) matAny.roughness = roughness;
+        if ("metalness" in matAny) matAny.metalness = 0.6;
+        mat.needsUpdate = true;
       });
     });
-  }, [clonedScene, color, roughness]);
+  }, [clonedScene, color, roughness, url]);
 
   // Helper: check if a mesh/mat should be tinted based on zone
   const shouldTintMesh = (meshName: string, matName: string, mat: THREE.Material) => {
