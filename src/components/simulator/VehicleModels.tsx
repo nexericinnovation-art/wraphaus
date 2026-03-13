@@ -27,9 +27,16 @@ const EXCLUDED_FROM_WRAP = [
   "tire", "tyre", "rubber",
   "wheel", "rim", "hub", "spoke", "brake", "caliper", "rotor", "disc",
   "light", "lamp", "lens", "headlight", "taillight", "signal", "indicator",
-  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper_lower", "front_grille",
-  "mirror_glass", "exhaust", "pipe", "muffler",
-  "interior", "seat", "dash", "steering", "carpet", "trim_interior",
+  "chrome", "emblem", "badge", "logo", "grille", "grill", "bumper", "front_grille",
+  "mirror", "exhaust", "pipe", "muffler",
+  "interior", "seat", "dash", "dashboard", "carpet", "trim_interior", "display", "console", "floor",
+  "cuero", "plastic", "defrost", "seatb",
+];
+
+const LAND_CRUISER_BODY_PATTERNS = ["carpaint", "carpaint_n2"];
+const HILUX_BODY_PATTERNS = [
+  "door", "hood", "fender", "quarter", "panel", "bed", "tailgate", "side", "body",
+  "primary", "hilux_mb", "chassis_primary",
 ];
 
 // Patterns that identify glass/window meshes for tinting
@@ -40,6 +47,22 @@ const GLASS_PATTERNS = [
 function matchesAny(name: string, patterns: string[]): boolean {
   const lower = name.toLowerCase();
   return patterns.some((p) => lower.includes(p));
+}
+
+function isBodyPanelTarget(modelUrl: string, meshName: string, matName: string): boolean {
+  const target = `${meshName} ${matName}`;
+
+  if (matchesAny(target, EXCLUDED_FROM_WRAP)) return false;
+
+  if (modelUrl.includes("land-cruiser")) {
+    return matchesAny(target, LAND_CRUISER_BODY_PATTERNS);
+  }
+
+  if (modelUrl.includes("hilux")) {
+    return matchesAny(target, HILUX_BODY_PATTERNS);
+  }
+
+  return true;
 }
 
 const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex, isChameleon = false, tintZone = "all", autoRotate = true, modelUrl }: SimulatorVehicleProps) => {
