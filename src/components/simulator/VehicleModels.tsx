@@ -47,7 +47,21 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   const groupRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
   const { scene } = useGLTF(url);
-  const clonedScene = useMemo(() => scene.clone(true), [scene]);
+
+  // Deep-clone scene AND materials so each instance is independent
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material) {
+        if (Array.isArray(child.material)) {
+          child.material = child.material.map((m) => m.clone());
+        } else {
+          child.material = child.material.clone();
+        }
+      }
+    });
+    return clone;
+  }, [scene]);
 
   // Auto-fit: compute bounding box and derive scale + offset to normalize all models
   const { autoScale, autoOffset } = useMemo(() => {
@@ -57,7 +71,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
     box.getSize(size);
     box.getCenter(center);
     const maxDim = Math.max(size.x, size.y, size.z);
-    const targetSize = 3.5; // desired size in scene units
+    const targetSize = 3.5;
     const s = targetSize / maxDim;
     return {
       autoScale: s,
