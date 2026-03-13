@@ -47,7 +47,21 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
   const groupRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
   const { scene } = useGLTF(url);
-  const clonedScene = useMemo(() => scene.clone(true), [scene]);
+
+  // Deep-clone scene AND materials so each instance is independent
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material) {
+        if (Array.isArray(child.material)) {
+          child.material = child.material.map((m) => m.clone());
+        } else {
+          child.material = child.material.clone();
+        }
+      }
+    });
+    return clone;
+  }, [scene]);
 
   // Auto-fit: compute bounding box and derive scale + offset to normalize all models
   const { autoScale, autoOffset } = useMemo(() => {
@@ -57,7 +71,7 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
     box.getSize(size);
     box.getCenter(center);
     const maxDim = Math.max(size.x, size.y, size.z);
-    const targetSize = 3.5; // desired size in scene units
+    const targetSize = 3.5;
     const s = targetSize / maxDim;
     return {
       autoScale: s,
@@ -74,38 +88,40 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const materials = Array.isArray(child.material) ? child.material : [child.material];
 
       materials.forEach((mat) => {
-        // Support any material with a color property
-        if (!('color' in mat) || !('roughness' in mat)) return;
-        const stdMat = mat as THREE.MeshStandardMaterial;
-        const matName = (stdMat.name || "").toLowerCase();
+        // Support any material with a color property (MeshStandard, MeshPhong, MeshBasic, etc.)
+        if (!('color' in mat)) return;
+        const matAny = mat as any;
+        const matName = (mat.name || "").toLowerCase();
 
         // Check if this is glass (for tint handling, skip wrap)
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (stdMat.transparent && stdMat.opacity < 0.9);
-
+          (mat.transparent && mat.opacity < 0.9);
         if (isGlass) return;
 
         // Check exclusions by mesh name and material name
         const isExcludedMesh = matchesAny(meshName, EXCLUDED_FROM_WRAP);
         const isExcludedMat = matchesAny(matName, EXCLUDED_FROM_WRAP);
 
-        // Heuristic: very dark + rough = tire/rubber
-        const hsl = { h: 0, s: 0, l: 0 };
-        stdMat.color.getHSL(hsl);
-        const isTireOrRubber = hsl.l < 0.08 && stdMat.roughness > 0.7;
+        // Heuristic: very dark + rough = tire/rubber (only if roughness exists)
+        let isTireOrRubber = false;
+        if ('roughness' in matAny) {
+          const hsl = { h: 0, s: 0, l: 0 };
+          matAny.color.getHSL(hsl);
+          isTireOrRubber = hsl.l < 0.08 && matAny.roughness > 0.7;
+        }
 
         if (!isExcludedMesh && !isExcludedMat && !isTireOrRubber) {
-          stdMat.color.set(bodyColor);
-          stdMat.roughness = roughness;
-          stdMat.metalness = 0.6;
-          stdMat.needsUpdate = true;
+          matAny.color.set(bodyColor);
+          if ('roughness' in matAny) matAny.roughness = roughness;
+          if ('metalness' in matAny) matAny.metalness = 0.6;
+          mat.needsUpdate = true;
         }
       });
     });
   }, [clonedScene, color, roughness]);
 
   // Helper: check if a mesh/mat should be tinted based on zone
-  const shouldTintMesh = (meshName: string, matName: string, mat: THREE.MeshStandardMaterial) => {
+  const shouldTintMesh = (meshName: string, matName: string, mat: THREE.Material) => {
     const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
       (mat.transparent && mat.opacity < 0.9);
     if (!isGlass) return false;
@@ -113,9 +129,9 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
     const isWindscreen = matchesAny(meshName, WINDSCREEN_PATTERNS) || matchesAny(matName, WINDSCREEN_PATTERNS);
     const isSideWindow = matchesAny(meshName, SIDE_WINDOW_PATTERNS) || matchesAny(matName, SIDE_WINDOW_PATTERNS);
 
-    if (tintZone === "windscreen") return isWindscreen || (!isSideWindow && !isWindscreen); // windscreen + unidentified glass
-    if (tintZone === "windows") return isSideWindow || (!isSideWindow && !isWindscreen); // side windows + unidentified
-    return true; // "all"
+    if (tintZone === "windscreen") return isWindscreen || (!isSideWindow && !isWindscreen);
+    if (tintZone === "windows") return isSideWindow || (!isSideWindow && !isWindscreen);
+    return true;
   };
 
   // Apply tint to windows/glass
@@ -127,27 +143,26 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const materials = Array.isArray(child.material) ? child.material : [child.material];
 
       materials.forEach((mat) => {
-        if (!('color' in mat) || !('roughness' in mat)) return;
-        const stdMat = mat as THREE.MeshStandardMaterial;
-        const matName = (stdMat.name || "").toLowerCase();
+        if (!('color' in mat)) return;
+        const matAny = mat as any;
+        const matName = (mat.name || "").toLowerCase();
 
         const isGlass = matchesAny(meshName, GLASS_PATTERNS) || matchesAny(matName, GLASS_PATTERNS) ||
-          (stdMat.transparent && stdMat.opacity < 0.9);
+          (mat.transparent && mat.opacity < 0.9);
         if (!isGlass) return;
 
-        stdMat.transparent = true;
-        if (shouldTintMesh(meshName, matName, stdMat)) {
+        mat.transparent = true;
+        if (shouldTintMesh(meshName, matName, mat)) {
           const baseOpacity = 0.35;
           const tintedOpacity = baseOpacity + tintLevel * 0.55;
-          stdMat.opacity = tintedOpacity;
-          stdMat.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
+          mat.opacity = tintedOpacity;
+          matAny.color.lerpColors(new THREE.Color(0x88ccff), baseTintColor, tintLevel);
         } else {
-          // Reset untinted glass
-          stdMat.opacity = 0.35;
-          stdMat.color.set(0x88ccff);
+          mat.opacity = 0.35;
+          matAny.color.set(0x88ccff);
         }
-        stdMat.roughness = 0.05;
-        stdMat.needsUpdate = true;
+        if ('roughness' in matAny) matAny.roughness = 0.05;
+        mat.needsUpdate = true;
       });
     });
   }, [clonedScene, tintLevel, tintColorHex, tintZone]);
@@ -165,12 +180,12 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
       const meshName = (child.name || "").toLowerCase();
       const materials = Array.isArray(child.material) ? child.material : [child.material];
       materials.forEach((mat) => {
-        if (!('color' in mat) || !('roughness' in mat)) return;
-        const stdMat = mat as THREE.MeshStandardMaterial;
-        const matName = (stdMat.name || "").toLowerCase();
-        if (!shouldTintMesh(meshName, matName, stdMat)) return;
-        stdMat.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
-        stdMat.needsUpdate = true;
+        if (!('color' in mat)) return;
+        const matAny = mat as any;
+        const matName = (mat.name || "").toLowerCase();
+        if (!shouldTintMesh(meshName, matName, mat)) return;
+        matAny.color.setHSL(hue, 0.6, 0.3 + (1 - tintLevel) * 0.2);
+        mat.needsUpdate = true;
       });
     });
   });
