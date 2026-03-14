@@ -33,10 +33,27 @@ const EXCLUDED_FROM_WRAP = [
   "cuero", "plastic", "defrost", "seatb",
 ];
 
-const LAND_CRUISER_BODY_PATTERNS = ["carpaint", "carpaint_n2"];
-const HILUX_BODY_PATTERNS = [
-  "door", "hood", "fender", "quarter", "panel", "bed", "tailgate", "side", "body",
-  "primary", "hilux_mb", "chassis_primary",
+const LAND_CRUISER_PAINT_MATERIAL_PATTERNS = ["carpaint", "carpaint_n2"];
+const LAND_CRUISER_INTERIOR_PATTERNS = [
+  "interior", "inner", "inside", "cabin", "cockpit", "headliner", "liner", "trim", "seat",
+  "steering", "dash", "dashboard", "console", "door_card", "doorcard", "pillar",
+];
+
+const HILUX_BODY_PANEL_PATTERNS = [
+  "body_main", "body_shell",
+  "door_fl", "door_fr", "door_rl", "door_rr", "door",
+  "hood", "bonnet", "fender", "quarter",
+  "bed", "rear_bed", "tailgate",
+  "side_panel", "sidepanel", "outer_panel", "exterior_panel",
+  "cab",
+  "carpaint", "paint",
+];
+
+const HILUX_NON_BODY_PATTERNS = [
+  "chassis", "frame", "underbody", "suspension", "axle", "engine", "exhaust",
+  "grille", "grill", "bumper", "mirror", "handle", "step", "rail", "rack", "rollbar",
+  "wheel", "rim", "tire", "tyre", "glass", "window", "light", "lamp", "indicator",
+  "interior", "inner", "inside", "seat", "dash", "console", "trim",
 ];
 
 // Patterns that identify glass/window meshes for tinting
@@ -50,16 +67,23 @@ function matchesAny(name: string, patterns: string[]): boolean {
 }
 
 function isBodyPanelTarget(modelUrl: string, meshName: string, matName: string): boolean {
-  const target = `${meshName} ${matName}`;
+  const normalizedUrl = modelUrl.toLowerCase();
+  const normalizedMeshName = meshName.toLowerCase();
+  const normalizedMatName = matName.toLowerCase();
+  const target = `${normalizedMeshName} ${normalizedMatName}`;
 
   if (matchesAny(target, EXCLUDED_FROM_WRAP)) return false;
 
-  if (modelUrl.includes("land-cruiser")) {
-    return matchesAny(target, LAND_CRUISER_BODY_PATTERNS);
+  if (normalizedUrl.includes("land-cruiser")) {
+    const isLandCruiserPaintMaterial = matchesAny(normalizedMatName, LAND_CRUISER_PAINT_MATERIAL_PATTERNS);
+    const isLandCruiserInterior = matchesAny(target, LAND_CRUISER_INTERIOR_PATTERNS);
+    return isLandCruiserPaintMaterial && !isLandCruiserInterior;
   }
 
-  if (modelUrl.includes("hilux")) {
-    return matchesAny(target, HILUX_BODY_PATTERNS);
+  if (normalizedUrl.includes("hilux")) {
+    const isHiluxBodyPanel = matchesAny(target, HILUX_BODY_PANEL_PATTERNS);
+    const isHiluxNonBodyPart = matchesAny(target, HILUX_NON_BODY_PATTERNS);
+    return isHiluxBodyPanel && !isHiluxNonBodyPart;
   }
 
   return true;
