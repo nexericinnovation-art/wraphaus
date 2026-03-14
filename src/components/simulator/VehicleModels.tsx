@@ -149,6 +149,10 @@ const SimulatorVehicle = ({ color, roughness, tintLevel, tintColor: tintColorHex
 
         if (!isBodyPanelTarget(url, meshName, matName)) return;
 
+        const isToyotaModel = url.includes("land-cruiser") || url.includes("hilux");
+        if (isToyotaModel && "map" in matAny && matAny.map) matAny.map = null;
+        if (isToyotaModel && "vertexColors" in matAny) matAny.vertexColors = false;
+
         matAny.color.set(bodyColor);
         if ("roughness" in matAny) matAny.roughness = roughness;
         if ("metalness" in matAny) matAny.metalness = 0.6;
